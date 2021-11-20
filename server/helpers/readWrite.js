@@ -1,5 +1,7 @@
 const fs = require('fs');
+
 const entriesData = require('../data/entries');
+const Entry = require('../models/entry');
 
 /**
  * Reads from the entries.json file and converts data into 
@@ -11,7 +13,8 @@ function readFromFile() {
         const parsedData = JSON.parse(jsonString);
         // iterate through parsed json array and push each entry onto the entriesData array
         parsedData.forEach(parsedDataObject => {
-            entriesData.push(parsedDataObject);
+            const entry = new Entry(parsedDataObject);
+            entriesData.push(entry);
         })
     } catch (err) {
         console.log(err);
