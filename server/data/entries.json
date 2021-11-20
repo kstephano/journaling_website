@@ -1,19 +1,19 @@
 [
     {
-        "id": "testid",
+        "id": "test id",
         "timestamp": "test timestamp",
-        "title": "test title",
-        "body": "test body content for post",
+        "title": "test tile",
+        "body": "test body",
         "gifUrl": "test gif url",
         "comments": [
             {
-                "id": "test comment id",
+                "id": "test comment",
                 "timestamp": "test comment timestamp",
-                "body": "test body content for comment"
+                "body": "test comment body"
             }
         ],
         "numOfLikeReacts": 0,
-        "numOfLoveReacts": 10,
-        "numOfLaughReacts": 5
+        "numOfLoveReacts": 5,
+        "numOfLaughReacts": 10
     }
 ]
