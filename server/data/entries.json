@@ -1,0 +1,19 @@
+[
+    {
+        "id": "testid",
+        "timestamp": "test timestamp",
+        "title": "test title",
+        "body": "test body content for post",
+        "gifUrl": "test gif url",
+        "comments": [
+            {
+                "id": "test comment id",
+                "timestamp": "test comment timestamp",
+                "body": "test body content for comment"
+            }
+        ],
+        "numOfLikeReacts": 0,
+        "numOfLoveReacts": 10,
+        "numOfLaughReacts": 5
+    }
+]
