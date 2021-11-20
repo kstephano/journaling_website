@@ -49,54 +49,6 @@ class Entry {
         const entryToDelete = entriesData.filter((entry) => entry.id === this.id)[0];
         entriesData.splice(entriesData.indexOf(entryToDelete), 1);
     }
-
-    incrementNumOfLikeReacts() {
-        this.numOfLikeReacts++;
-    }
-
-    incrementNumOfLoveReacts() {
-        this.numOfLoveReacts++;
-    }
-
-    incrementNumOfLaughReacts() {
-        this.numOfLaughReacts++;
-    }
-
-    get id() {
-        return this.id;
-    }
-
-    get timestamp() {
-        return this.timestamp;
-    }
-
-    get title() {
-        return this.title;
-    }
-
-    get body() {
-        return this.body;
-    }
-
-    get gifUrl() {
-        return this.gifUrl;
-    }
-
-    get comments() {
-        return this.comments;
-    }
-
-    get numOfLikeReacts() {
-        return this.numOfLikeReacts;
-    }
-
-    get numOfLoveReacts() {
-        return this.numOfLoveReacts;
-    }
-
-    get numOfLaughReacts() {
-        return this.numOfLoveReacts;
-    }
 }
 
 module.exports = Entry;
