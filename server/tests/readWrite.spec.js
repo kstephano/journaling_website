@@ -7,5 +7,8 @@ describe('readFromFile', () => {
         expect(entries[0]).toHaveProperty(
             'id', 'timestamp', 'title', 'body', 'gifUrl', 'comments', 'numOfLikeReacts', 'numOfLoveReacts', 'numOfLaughReacts'
         );
-    })
-})
+    });
+});
+
+// writeFromFile has been tested and correctly overwrites the entries.json file
+// not included in the test because it would overwrite the file
