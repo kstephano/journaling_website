@@ -15,7 +15,7 @@ function readFromFile() {
         parsedData.forEach(parsedDataObject => {
             const entry = new Entry(parsedDataObject);
             entriesData.push(entry);
-        })
+        });
     } catch (err) {
         console.log(err);
     }
