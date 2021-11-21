@@ -74,4 +74,20 @@ describe('Entry model', () => {
         entriesData[0].numOfLikeReacts++;
         expect(entriesData[0].numOfLikeReacts).toEqual(1);
     });
+
+    it('should increment numOfLoveReacts', () => {
+        entriesData[0].numOfLoveReacts++;
+        expect(entriesData[0].numOfLoveReacts).toEqual(6);
+    });
+
+    it('should increment numOfLaughReacts', () => {
+        entriesData[0].numOfLaughReacts++;
+        expect(entriesData[0].numOfLaughReacts).toEqual(11);
+    })
+
+    it('should be able to update the comments', () => {
+        Entry.findById('test id').comments.push({ id: "second comment", timestamp: "time", body: "contents of second comment" });
+        expect(entriesData[0].comments.length).toEqual(2);
+        expect(entriesData[0].comments[1]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
+    })
 })
