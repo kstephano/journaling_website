@@ -13,8 +13,7 @@ function readFromFile() {
         const parsedData = JSON.parse(jsonString);
         // iterate through parsed json array and push each entry onto the entriesData array
         parsedData.forEach(parsedDataObject => {
-            const entry = new Entry(parsedDataObject);
-            entriesData.push(entry);
+            entriesData.push(parsedDataObject);
         });
     } catch (err) {
         console.log(err);
