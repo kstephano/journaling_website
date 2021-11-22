@@ -1,6 +1,4 @@
-const moment = require('moment');
-
-const entriesData = require('../data/entries');
+let entriesData = require('../data/entries');
 
 class Entry {
     constructor(data) {
@@ -8,11 +6,8 @@ class Entry {
         this.timestamp = data.timestamp;
         this.title = data.title;
         this.body = data.body;
-        this.gifUrl = data.gifUrl;
         this.comments = data.comments;
-        this.numOfLikeReacts = data.numOfLikeReacts;
-        this.numOfLoveReacts = data.numOfLoveReacts;
-        this.numOfLaughReacts = data.numOfLaughReacts;
+        this.emojis = data.emojis;
     }
 
     static get all() {
@@ -31,23 +26,40 @@ class Entry {
     }
 
     static create(data, uid) {
-        const timestamp = moment().format();
+        const timestamp = Date.now();
         const newEntryId = `${uid}${timestamp}`; // entry id consists of user id concatenated with time of entry creation
         const newEntry = new Entry({ 
             id: newEntryId,
             timestamp: timestamp,
             comments: [],
-            numOfLikeReacts: 0,
-            numOfLoveReacts: 0,
-            numOfLaughReacts: 0,
+            emojis: {
+                likeCount: 0,
+                loveCount: 0,
+                laughCount: 0
+            },
             ...data 
         });
         entriesData.push(newEntry);
     }
 
-    delete() {
-        const entryToDelete = entriesData.filter((entry) => entry.id === this.id)[0];
-        entriesData.splice(entriesData.indexOf(entryToDelete), 1);
+    static deleteById(id) {
+        entriesData = entriesData.filter((entry) => entry.id !== id);
+        return entriesData;
+    }
+
+    static getEntriesByPageNumber(pageNum) {
+        let startIndex = (pageNum - 1) * 12;
+        let entriesForPage = [];
+
+        if (startIndex > entriesData.length) {
+            throw 'Given page number exceeds entries array length';
+        } else {
+            for (let i = 0; i < 12; i++) {
+                entriesForPage[i] = entriesData[startIndex];
+                startIndex++;
+            }
+        }
+        return entriesForPage;
     }
 }
 
