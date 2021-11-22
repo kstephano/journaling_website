@@ -1,13 +1,15 @@
 const helpers = require('../helpers/readWrite');
-const entriesData = require('../data/entries');
 const Entry = require('../models/entry');
+let entriesData = require('../data/entries');
 
 describe('Entry model', () => {
     const testUid = 12345;
     const testEntry = {
         title: "Test entry title",
-        body: "Test entry body",
-        gifUrl: "Test entry gif url"
+        body: {
+            text: "Test entry body",
+            gifUrls: ["Test entry gif url"]
+        }
     };
 
     // Read from the entries.json file to populate the entries array with 1 test entry
@@ -20,21 +22,23 @@ describe('Entry model', () => {
             id: "id loaded in from file",
             timestamp: "timestamp loaded in from file",
             comments: [],
-            numOfLikeReacts: 0,
-            numOfLoveReacts: 0,
-            numOfLaughReacts: 0,
+            emojis: {
+                likeCount: 0,
+                loveCount: 0,
+                laughtCount: 0
+            },
             ...testEntry
         });
         
         expect(entry.id).toBe("id loaded in from file");
         expect(entry.timestamp).toBe("timestamp loaded in from file");
         expect(entry.comments).toStrictEqual([]);
-        expect(entry.numOfLikeReacts).toBe(0);
-        expect(entry.numOfLoveReacts).toBe(0);
-        expect(entry.numOfLaughReacts).toBe(0);
+        expect(entry.emojis.likeCount).toBe(0);
+        expect(entry.emojis.loveCount).toBe(0);
+        expect(entry.emojis.laughtCount).toBe(0);
         expect(entry.title).toBe("Test entry title");
-        expect(entry.body).toBe("Test entry body");
-        expect(entry.gifUrl).toBe("Test entry gif url");
+        expect(entry.body.text).toBe("Test entry body");
+        expect(entry.body.gifUrls[0]).toBe("Test entry gif url");
     });
 
     it('should return all entries', () => {
@@ -59,30 +63,57 @@ describe('Entry model', () => {
 
     it('should create an entry', () => {
         Entry.create(testEntry, testUid);
-        expect(entriesData[1]).toHaveProperty('id', 'timestamp', 'title', 'body', 'gifUrl', 'comments', 'numOfLikeReact', 'numOfLoveReacts', 'numOfLaughReacts');
+        expect(entriesData[1]).toHaveProperty('id', 'timestamp', 'title', 'body', 'comments', 'emojis');
     });
 
     it('should delete an entry', () => {
-        const entryToDelete = entriesData[1];
-        entryToDelete.delete();
+        entriesData = Entry.deleteById(entriesData[1].id);
 
         expect(entriesData.length).toEqual(1);
-        expect(entriesData).not.toContain(entryToDelete);
+        expect(entriesData).not.toContain(entriesData[1]);
+    });
+
+    it('should be able to get a list of 12 entries given a valid page number', () => {
+        // add entries so that there are 12 in the entriesData array
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid);
+
+        const retrievedEntries = Entry.getEntriesByPageNumber(1);
+        expect(entriesData.length).toEqual(12);
+        expect(retrievedEntries.length).toEqual(12);
+        expect(entriesData).toEqual(retrievedEntries);
+    });
+
+    it('should throw an error if a page number is given is too big for the entriesData array', () => {
+        function testError() {
+            Entry.getEntriesByPageNumber(5);
+        }
+        
+        expect(testError).toThrowError('Given page number exceeds entries array length');
     });
 
     it('should be able to increment numOfLikeReacts', () => {
-        entriesData[0].numOfLikeReacts++;
-        expect(entriesData[0].numOfLikeReacts).toEqual(1);
+        entriesData[0].emojis.likeCount++;
+        expect(entriesData[0].emojis.likeCount).toEqual(1);
     });
 
     it('should be able to increment numOfLoveReacts', () => {
-        entriesData[0].numOfLoveReacts++;
-        expect(entriesData[0].numOfLoveReacts).toEqual(6);
+        entriesData[0].emojis.loveCount++;
+        expect(entriesData[0].emojis.loveCount).toEqual(1);
     });
 
     it('should be able to increment numOfLaughReacts', () => {
-        entriesData[0].numOfLaughReacts++;
-        expect(entriesData[0].numOfLaughReacts).toEqual(11);
+        entriesData[0].emojis.laughCount++;
+        expect(entriesData[0].emojis.laughCount).toEqual(1);
     });
 
     it('should be able to update the comments', () => {
