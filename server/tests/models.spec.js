@@ -121,4 +121,20 @@ describe('Entry model', () => {
         expect(entriesData[0].comments.length).toEqual(2);
         expect(entriesData[0].comments[1]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
     });
+
+    it('should be able to use findById to get an entry then update its values', () => {
+        Entry.findById('test id').emojis.likeCount++;
+        Entry.findById('test id').comments.push({
+            id: "second test comment",
+            timestamp: "time of comment",
+            body: "contents"
+        })
+        expect(entriesData[0].emojis.likeCount).toEqual(2);
+        expect(entriesData[0].comments.length).toEqual(3);
+        expect(entriesData[0].comments[2]).toEqual({
+            id: "second test comment",
+            timestamp: "time of comment",
+            body: "contents"
+        });
+    })    
 })
