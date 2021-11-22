@@ -37,7 +37,6 @@ class Entry {
 
     static deleteById(id) {
         entriesData = entriesData.filter((entry) => entry.id !== id);
-        return entriesData;
     }
 
     static getEntriesByPageNumber(pageNum) {
