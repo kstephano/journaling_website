@@ -20,6 +20,17 @@
             <input type="text" id="title-input" placeholder="Title" maxlength="40">
             <div class="form-body-container">
                 <textarea name="entry-content" id="entry-content" cols="30" rows="10" placeholder="Your text here" maxlength="1000"></textarea>
+                <div class="gif-container">
+                    <img 
+                        id="gif"
+                        src="./assets/gifs/gif_placeholder.gif" 
+                        alt="Chosen GIF"
+                    >
+                    <div class="gif-search-container">
+                        <input type="text" id="search-input" placeholder="Search for a GIF">
+                        <img id="search-icon" src="./assets/images/search_icon.png" alt="Search button">
+                    </div>
+                </div>
                 <div class="gif-scrolling-displayer">
                     <img 
                         id="gif"
@@ -36,17 +47,6 @@
                         src="./assets/gifs/gif_placeholder.gif" 
                         alt="Chosen GIF"
                     >
-                </div>
-                <div class="gif-container">
-                    <img 
-                        id="gif"
-                        src="./assets/gifs/gif_placeholder.gif" 
-                        alt="Chosen GIF"
-                    >
-                    <div class="gif-search-container">
-                        <input type="text" id="search-input" placeholder="Search for a GIF">
-                        <img id="search-icon" src="./assets/images/search_icon.png" alt="Search button">
-                    </div>
                 </div>
             </div>
             <button type="submit" id="submit-btn">Upload Post!</button>
