@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "browserify index.js > bundle.js"
+    "bundle": "browserify index.js model.js > bundle.js",
+    "dev": "watchify index.js model.js -o bundle.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "browserify": "^17.0.0"
+    "browserify": "^17.0.0",
+    "watchify": "^4.0.0"
   }
 }
