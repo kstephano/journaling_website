@@ -3,6 +3,6 @@
  * Initially empty, a json file is read from to populate this array with data.
  * 
  */
-const entriesData = [];
+let entriesData = [];
 
 module.exports = entriesData;
