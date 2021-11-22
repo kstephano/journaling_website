@@ -11,8 +11,7 @@ class Entry {
     }
 
     static get all() {
-        const entries = entriesData.map((data) => new Entry(data));
-        return entries;
+        return entriesData;
     }
 
     static findById(id) {
