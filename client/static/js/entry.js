@@ -40,8 +40,8 @@ function divBuilder(data, div){
         let img = document.createElement('img');
         img.setAttribute("src", gif.url);
         img.setAttribute("alt", gifs[i].title);
-        img.setAttribute("value", gifs[i].id);
-        img.setAttribute("id", gifs[i].id)
+        img.setAttribute("value", gifs[i].embed_url);
+        img.setAttribute("id", gifs[i].embed_url)
         div.appendChild(img);
         let listen = document.getElementById(gifs[i].id);
         listen.addEventListener("click", setGif);
