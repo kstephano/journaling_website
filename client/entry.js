@@ -6,19 +6,11 @@ const apiId = "3QiTkeYYexhSYHU3M2hEaHXVgZ5ogLkN";
 gifTrend(gifCont);
 
 form.addEventListener("submit", gifWindow);
-
-
-
-
-
-// let gifSearch = document.querySelector("#gif-search");
-// gifSearch.addEventListener("focus", gifWindow)
+document.querySelector("#post").addEventListener("click", upload)
 
 
 async function gifWindow(e) {
     e.preventDefault();
-    // let gifCont = document.createElement('div');
-    // gifCont.setAttribute("id", "gif-cont");
     clearDiv(gifCont);
     let value = e.target.gifSearch.value;
     console.log(value)
@@ -28,9 +20,6 @@ async function gifWindow(e) {
         await gifTrend(gifCont);
     }
 };
-    
-
-
 
 async function gifTrend(div) {
     let response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=20`);
@@ -70,7 +59,31 @@ function setGif(e){
     clearDiv(div);
     let newGif = document.createElement("img");
     newGif.setAttribute("src", gif.src);
-    newGif.setAttribute("value", gif.value);
+    newGif.setAttribute("value", gif.id);
     newGif.setAttribute("alt", gif.alt);
+    newGif.setAttribute("id", "selected")
     div.appendChild(newGif);
+}
+
+async function upload(e) {
+    let gifSelect = document.querySelector("#selected").getAttribute("value");
+    console.log(gifSelect);
+    
+	const options = {
+		method: "POST",
+		body: JSON.stringify({ id: "", time: Date.now(), title: form.title.value, body: {text: form.textBody.value, gif: gifSelect}, comments: [], emojis: {emoji1: 0, emoji2: 0, emoji3: 0}}),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	};
+    try{
+	    let response = await fetch("#", options);
+        let resdata = await response.json();
+        console.log(resdata);
+
+    } catch(err) {
+        console.log(err)
+    }
+
+    location.href = "index.html";
 }
