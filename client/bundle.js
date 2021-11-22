@@ -25,7 +25,7 @@ commentButtons.forEach(commentBut => commentBut.addEventListener("click", () => 
 
 emojiButtons.forEach(emojiButton => {
     emojiButton.addEventListener("click", () => {
-        console.log("im being pressed")
+        // console.log("im being pressed")
         emojiButton.classList.toggle("emoji-clicked")
     })
 })
@@ -34,6 +34,26 @@ document.querySelector("#greyed-out").addEventListener("click", () => {
     greyBox.style.zIndex = "-100"
     commentBox.style.zIndex = "-100"
 })
+
+
+
+let templatePost = [
+    {   
+        id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
+        time: 1637585802352,
+        title: "Post Heading",
+        body: {text: "text", gif: "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
+        comments: [{id: "96584286-4b00-48da-bc1d-fa1eb82a5cee", time: 1637585812352, body: "comment 1"}, 
+        {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
+        emojis: {"emoji1": 0, "emoji2": 5, "emoji3": 11}
+    }
+]
+
+let currentLocalTimestap = Math.floor((new Date()).getTime() / 1000)
+// let currentUTCTimestap = currentLocalTimestap.
+let date = Date.now();
+
+console.log(Date(date))
 },{"uuid":2}],2:[function(require,module,exports){
 "use strict";
 
