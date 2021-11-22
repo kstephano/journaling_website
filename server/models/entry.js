@@ -61,6 +61,15 @@ class Entry {
         }
         return entriesForPage;
     }
+
+    static deleteCommentById(commentId, entryId) {
+        const entry = entriesData.find(entry => entry.id === entryId);
+        if (entry) {
+            entry.comments = entry.comments.filter(comment => comment.id != commentId);
+        } else {
+            throw 'Given entry ID is invalid';
+        }
+    }
 }
 
 module.exports = Entry;
