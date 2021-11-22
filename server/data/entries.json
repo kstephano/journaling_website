@@ -3,8 +3,10 @@
         "id": "test id",
         "timestamp": "test timestamp",
         "title": "test tile",
-        "body": "test body",
-        "gifUrl": "test gif url",
+        "body": {
+            "text": "test body",
+            "gifUrls": []
+        },
         "comments": [
             {
                 "id": "test comment",
@@ -12,8 +14,10 @@
                 "body": "test comment body"
             }
         ],
-        "numOfLikeReacts": 0,
-        "numOfLoveReacts": 5,
-        "numOfLaughReacts": 10
+        "emojis": {
+            "likeCount": 0,
+            "loveCount": 0,
+            "laughCount": 0
+        }
     }
 ]
