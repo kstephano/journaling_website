@@ -16,13 +16,7 @@ class Entry {
     }
 
     static findById(id) {
-        try {
-            const data = entriesData.filter((entry) => entry.id === id)[0];
-            const entry = new Entry(data);
-            return entry;
-        } catch(e) {
-            throw new Error('Entry does not exist in the data');
-        }
+        return entriesData.find(entry => entry.id === id);
     }
 
     static create(data, uid) {
