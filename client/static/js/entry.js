@@ -1,27 +1,26 @@
 let searchBtn = document.querySelector("#search-icon");
-let gifCont = document.querySelector("#gifs");
+let gifCont = document.querySelector(".gif-scrolling-displayer");
 
 const apiId = "3QiTkeYYexhSYHU3M2hEaHXVgZ5ogLkN";
-
-gifTrend(gifCont);
-
-searchBtn.addEventListener("click", gifWindow);
-document.querySelector("#submit-btn").addEventListener("submit", upload)
 
 let noGif = document.createElement("img");
 noGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
 noGif.setAttribute("alt", "No GIF selection");
 noGif.setAttribute("id", "no-gif");
+noGif.style.width = "200px";
+
+noGifOpt();
+gifTrend(gifCont);
+
+searchBtn.addEventListener("click", gifWindow);
+document.querySelector("#submit-btn").addEventListener("submit", upload)
+
+
 
 
 async function gifWindow(e) {
     clearDiv(gifCont);
-    gifCont.appendChild(noGif);
-    document.getElementById("no-gif").addEventListener('click', e => {
-        let newGif = document.querySelector("#gif");
-        newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
-        newGif.setAttribute("value", );
-    })
+    noGifOpt();
     let value = document.querySelector("#search-input").value;
     console.log(value)
     if(value){
@@ -47,14 +46,14 @@ function divBuilder(data, div){
     let gifs = data.data;
 
     for(let i = 0; i < gifs.length; i++){
-        let gif = gifs[i].images.fixed_width_small;
+        let gif = gifs[i].images.fixed_width;
         let img = document.createElement('img');
         img.setAttribute("src", gif.url);
         img.setAttribute("alt", gifs[i].title);
         img.setAttribute("value", gifs[i].embed_url);
         img.setAttribute("id", gifs[i].embed_url)
         div.appendChild(img);
-        let listen = document.getElementById(gifs[i].id);
+        let listen = document.getElementById(gifs[i].embed_url);
         listen.addEventListener("click", setGif);
     }
 }
@@ -104,4 +103,13 @@ async function upload(e) {
     }
 
     location.href = "index.html";
+}
+
+function noGifOpt(){
+    gifCont.appendChild(noGif);
+    document.getElementById("no-gif").addEventListener('click', e => {
+        let newGif = document.querySelector("#gif");
+        newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
+        newGif.removeAttribute("value");
+    })
 }
