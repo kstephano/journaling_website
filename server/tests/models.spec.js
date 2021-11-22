@@ -53,12 +53,10 @@ describe('Entry model', () => {
         expect(entry).toEqual(entriesData[0]);
     });
 
-    it('should throw an error if there is no entry', () => {
-        function testError() {
-            Entry.findById('invalid id');
-        }
+    it('should return undefined if given an invalid id', () => {
+        const entry = Entry.findById('invalid id');
 
-        expect(testError).toThrowError('Entry does not exist in the data');
+        expect(entry).toEqual(undefined);
     });
 
     it('should create an entry', () => {
@@ -127,7 +125,7 @@ describe('Entry model', () => {
             id: "third test comment",
             timestamp: "time of comment",
             body: "contents"
-        })
+        });
         expect(entriesData[0].comments.length).toEqual(3);
         expect(entriesData[0].comments[2]).toEqual({
             id: "third test comment",
