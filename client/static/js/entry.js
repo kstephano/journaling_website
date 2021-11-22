@@ -1,18 +1,17 @@
-let form = document.querySelector("form");
+let searchBtn = document.querySelector("#search-icon");
 let gifCont = document.querySelector("#gifs");
 
 const apiId = "3QiTkeYYexhSYHU3M2hEaHXVgZ5ogLkN";
 
 gifTrend(gifCont);
 
-form.addEventListener("submit", gifWindow);
-document.querySelector("#post").addEventListener("click", upload)
+searchBtn.addEventListener("click", gifWindow);
+document.querySelector("#submit-btn").addEventListener("submit", upload)
 
 
 async function gifWindow(e) {
-    e.preventDefault();
     clearDiv(gifCont);
-    let value = e.target.gifSearch.value;
+    let value = document.querySelector("#search-input").value;
     console.log(value)
     if(value){
         await gifSearching(gifCont, value)
@@ -55,23 +54,31 @@ function clearDiv(div){
 
 function setGif(e){
     let gif = e.target;
-    let div = document.querySelector("#gif");
-    clearDiv(div);
-    let newGif = document.createElement("img");
+    let newGif = document.querySelector("#gif");
     newGif.setAttribute("src", gif.src);
     newGif.setAttribute("value", gif.id);
-    newGif.setAttribute("alt", gif.alt);
-    newGif.setAttribute("id", "selected")
-    div.appendChild(newGif);
+    // newGif.setAttribute("alt", gif.alt);
+    // newGif.setAttribute("id", "selected")
+    // div.appendChild(newGif);
 }
 
 async function upload(e) {
+    e.preventDefault();
     let gifSelect = document.querySelector("#selected").getAttribute("value");
     console.log(gifSelect);
+
+    let postData = {
+        id: "", 
+        time: Date.now(), 
+        title: document.querySelector("#title-input").value, 
+        body: {text: document.querySelector("#entry-content").value, gif: gifSelect}, 
+        comments: [], 
+        emojis: {emoji1: 0, emoji2: 0, emoji3: 0}
+    }
     
 	const options = {
 		method: "POST",
-		body: JSON.stringify({ id: "", time: Date.now(), title: form.title.value, body: {text: form.textBody.value, gif: gifSelect}, comments: [], emojis: {emoji1: 0, emoji2: 0, emoji3: 0}}),
+		body: JSON.stringify(postData),
 		headers: {
 			"Content-Type": "application/json"
 		}
