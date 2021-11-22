@@ -35,14 +35,9 @@ class Entry {
      * Creates a new entry and pushes it onto the array.
      * 
      * @param {An object containing attributes that correspond to those in an Entry} data 
-     * @param {The unique ID of the user creating the Entry} uid 
      */
-    static create(data, uid) {
-        const timestamp = Date.now();
-        const newEntryId = `${uid}${timestamp}`; // entry id consists of user id concatenated with time of entry creation
+    static create(data) {
         const newEntry = new Entry({ 
-            id: newEntryId,
-            timestamp: timestamp,
             comments: [],
             emojis: {
                 likeCount: 0,
