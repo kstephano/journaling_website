@@ -65,8 +65,9 @@ describe('Entry model', () => {
     });
 
     it('should delete an entry', () => {
-        entriesData = Entry.deleteById(entriesData[1].id);
-
+        Entry.deleteById(entriesData[1].id);
+        entriesData = Entry.all; // update entriesData
+  
         expect(entriesData.length).toEqual(1);
         expect(entriesData).not.toContain(entriesData[1]);
     });
@@ -84,8 +85,8 @@ describe('Entry model', () => {
         Entry.create(testEntry, testUid);
         Entry.create(testEntry, testUid);
         Entry.create(testEntry, testUid);
-
         const retrievedEntries = Entry.getEntriesByPageNumber(1);
+
         expect(entriesData.length).toEqual(12);
         expect(retrievedEntries.length).toEqual(12);
         expect(entriesData).toEqual(retrievedEntries);
@@ -99,23 +100,26 @@ describe('Entry model', () => {
         expect(testError).toThrowError('Given page number exceeds entries array length');
     });
 
-    it('should be able to increment numOfLikeReacts', () => {
+    it('should be able to increment emojis.likeCount', () => {
         Entry.findById('test id').emojis.likeCount++;
+
         expect(entriesData[0].emojis.likeCount).toEqual(1);
     });
 
-    it('should be able to increment numOfLoveReacts', () => {
+    it('should be able to increment emojis.loveCount', () => {
         Entry.findById('test id').emojis.loveCount++;
+
         expect(entriesData[0].emojis.loveCount).toEqual(1);
     });
 
-    it('should be able to increment numOfLaughReacts', () => {
+    it('should be able to increment emojis.laughCount', () => {
         Entry.findById('test id').emojis.laughCount++;
         expect(entriesData[0].emojis.laughCount).toEqual(1);
     });
 
     it('should be able to update the comments', () => {
         Entry.findById('test id').comments.push({ id: "second comment", timestamp: "time", body: "contents of second comment" });
+
         expect(entriesData[0].comments.length).toEqual(2);
         expect(entriesData[0].comments[1]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
     });
@@ -126,6 +130,7 @@ describe('Entry model', () => {
             timestamp: "time of comment",
             body: "contents"
         });
+
         expect(entriesData[0].comments.length).toEqual(3);
         expect(entriesData[0].comments[2]).toEqual({
             id: "third test comment",
