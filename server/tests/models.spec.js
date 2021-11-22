@@ -102,17 +102,17 @@ describe('Entry model', () => {
     });
 
     it('should be able to increment numOfLikeReacts', () => {
-        entriesData[0].emojis.likeCount++;
+        Entry.findById('test id').emojis.likeCount++;
         expect(entriesData[0].emojis.likeCount).toEqual(1);
     });
 
     it('should be able to increment numOfLoveReacts', () => {
-        entriesData[0].emojis.loveCount++;
+        Entry.findById('test id').emojis.loveCount++;
         expect(entriesData[0].emojis.loveCount).toEqual(1);
     });
 
     it('should be able to increment numOfLaughReacts', () => {
-        entriesData[0].emojis.laughCount++;
+        Entry.findById('test id').emojis.laughCount++;
         expect(entriesData[0].emojis.laughCount).toEqual(1);
     });
 
@@ -122,19 +122,36 @@ describe('Entry model', () => {
         expect(entriesData[0].comments[1]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
     });
 
-    it('should be able to use findById to get an entry then update its values', () => {
-        Entry.findById('test id').emojis.likeCount++;
+    it('should be able to use findById to add a comment', () => {
         Entry.findById('test id').comments.push({
-            id: "second test comment",
+            id: "third test comment",
             timestamp: "time of comment",
             body: "contents"
         })
-        expect(entriesData[0].emojis.likeCount).toEqual(2);
         expect(entriesData[0].comments.length).toEqual(3);
         expect(entriesData[0].comments[2]).toEqual({
-            id: "second test comment",
+            id: "third test comment",
             timestamp: "time of comment",
             body: "contents"
         });
-    })    
+    });
+    
+    it('should delete a comment', () => {
+        Entry.deleteCommentById('third test comment', 'test id');
+
+        expect(entriesData[0].comments.length).toEqual(2);
+        expect(entriesData[0].comments).not.toContain({
+            id: "third test comment",
+            timestamp: "time of comment",
+            body: "contents"
+        });
+    });
+
+    it('should throw an error if an invalid entry id is given', () => {
+        function testError() {
+            Entry.deleteCommentById('second test comment', 'invalid id');
+        }
+
+        expect(testError).toThrowError('Given entry ID is invalid');
+    });
 })
