@@ -8,9 +8,20 @@ gifTrend(gifCont);
 searchBtn.addEventListener("click", gifWindow);
 document.querySelector("#submit-btn").addEventListener("submit", upload)
 
+let noGif = document.createElement("img");
+noGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
+noGif.setAttribute("alt", "No GIF selection");
+noGif.setAttribute("id", "no-gif");
+
 
 async function gifWindow(e) {
     clearDiv(gifCont);
+    gifCont.appendChild(noGif);
+    document.getElementById("no-gif").addEventListener('click', e => {
+        let newGif = document.querySelector("#gif");
+        newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
+        newGif.setAttribute("value", );
+    })
     let value = document.querySelector("#search-input").value;
     console.log(value)
     if(value){
@@ -21,13 +32,13 @@ async function gifWindow(e) {
 };
 
 async function gifTrend(div) {
-    let response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=20`);
+    let response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=10`);
     let data = await response.json();
     divBuilder(data, div);
 }
 
 async function gifSearching(div, str){
-    let response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=20`);
+    let response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=10`);
     let data = await response.json();
     divBuilder(data, div);
 }
