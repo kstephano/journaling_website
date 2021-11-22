@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Praise&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Manuale:wght@300&display=swap');
+
+@import url('./variables.css');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    background-color: var(--colour-primary);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
+}
+
+body {
+    background-color: var(--colour-bg);
+    font-family: 'Lora', serif;
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+    margin: 0 auto;
+    padding: .25rem;
+    background: linear-gradient(to right, white, white 50%, midnightblue 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: background-position 275ms ease;
+    cursor: pointer;
+}
+
+input {
+    font-family: 'Lora', serif;
+}
+
+textarea {
+    font-family: 'Lora', serif;
+    resize: none;
+}
+
+h1:hover {
+    background-position: 0 100%;
+}
+
+h2 {
+    width: fit-content;
+    padding: 1rem;
+    font-family: 'Manuale', serif;
+}
+
+footer {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    bottom: 0;
+    background-color: var(--colour-neutral-700);
+    color: white;
+    height: 40px;
+    width: 100%;
+}
+
+footer p {
+    padding: 10px 30px 0 30px;
+}
+
+.form-heading-container {
+    border-bottom: 3px solid var(--colour-bg);
+}
+
+.form-body-container {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.gif-search-container {
+    width: 300px;
+    display: flex;
+}
+
+#go-back-btn {
+    position: absolute;
+    top: 6px;
+    left: 4px;
+    height: 30px;
+    width: 30px;
+    padding: .25rem;
+    cursor: pointer;
+}
+
+#go-back-btn:hover {
+    opacity: .5;
+}
+
+#add-entry-form {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: var(--colour-secondary);
+    border-radius: 5px;
+}
+
+#title-input {
+    padding: .2rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    text-indent: 5px;
+    min-width: 300px;
+}
+
+#entry-content {
+    padding: .2rem;
+    width: 100%;
+    margin-right: 1rem;
+    text-indent: 5px;
+}
+
+#gif {
+    width: 300px;
+    padding-bottom: .5rem;
+}
+
+#search-input {
+    width: 100%;
+    text-indent: 5px;
+}
+
+#search-icon {
+    padding: .1rem;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+#search-icon:hover {
+    opacity: .5;
+}
+
+#submit-btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    box-shadow: 3px 4px 0px 0px #899599;
+	background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+	background-color: var(--colour-primary);
+	border-radius: 15px;
+	border: 1px solid var(--colour-bg);
+	cursor: pointer;
+	color:black;
+	font-size:17px;
+    font-weight: 700;
+    font-family: 'Manuale', serif;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #e1e2ed;
+}
+
+#submit-btn:hover {
+    background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+	background-color:var(--colour-bg);
+}
+
+#submit-btn:active {
+    position: relative;
+	top: 1px;
+}
+
+@media screen and (max-width: 620px) {
+    .form-body-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #entry-content {
+        margin-bottom: 1rem;
+        margin-left: 1rem;
+    }
+
+    #gif {
+        width: 100%;
+    }
+
+    .gif-search-container {
+        width: 100%;
+    }
+}
