@@ -5,6 +5,8 @@ let entriesData = require('../data/entries');
 describe('Entry model', () => {
     const testUid = 12345;
     const testEntry = {
+        id: "another test id",
+        timestamp: "another test timestamp",
         title: "Test entry title",
         body: {
             text: "Test entry body",
@@ -19,8 +21,6 @@ describe('Entry model', () => {
 
     it('should make an instance of an entry', () => {
         const entry = new Entry({
-            id: "id loaded in from file",
-            timestamp: "timestamp loaded in from file",
             comments: [],
             emojis: {
                 likeCount: 0,
@@ -30,8 +30,8 @@ describe('Entry model', () => {
             ...testEntry
         });
         
-        expect(entry.id).toBe("id loaded in from file");
-        expect(entry.timestamp).toBe("timestamp loaded in from file");
+        expect(entry.id).toBe("another test id");
+        expect(entry.timestamp).toBe("another test timestamp");
         expect(entry.comments).toStrictEqual([]);
         expect(entry.emojis.likeCount).toBe(0);
         expect(entry.emojis.loveCount).toBe(0);

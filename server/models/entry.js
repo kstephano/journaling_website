@@ -130,7 +130,7 @@ class Entry {
      * @param {The unique ID of the parent entry} entryId 
      */
     static deleteCommentById(commentId, entryId) {
-        const entry = entriesData.find(entry => entry.id === entryId);
+        const entry = Entry.findById(entryId);
         // If the entry exists, delete the comment, otherwise throw an error
         if (entry) {
             entry.comments = entry.comments.filter(comment => comment.id != commentId);
