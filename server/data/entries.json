@@ -5,7 +5,7 @@
         "title": "test tile",
         "body": {
             "text": "test body",
-            "gifUrls": []
+            "gifUrl": "test gif url"
         },
         "comments": [
             {

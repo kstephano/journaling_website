@@ -10,7 +10,7 @@ describe('Entry model', () => {
         title: "Test entry title",
         body: {
             text: "Test entry body",
-            gifUrls: ["Test entry gif url"]
+            gifUrl: "Test gif url"
         }
     };
 
@@ -38,7 +38,7 @@ describe('Entry model', () => {
         expect(entry.emojis.laughtCount).toBe(0);
         expect(entry.title).toBe("Test entry title");
         expect(entry.body.text).toBe("Test entry body");
-        expect(entry.body.gifUrls[0]).toBe("Test entry gif url");
+        expect(entry.body.gifUrl).toBe("Test gif url");
     });
 
     it('should return all entries', () => {

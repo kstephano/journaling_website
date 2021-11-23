@@ -15,7 +15,7 @@ describe('API server', () => {
         title: "Test entry title",
         body: {
             text: "Test entry body",
-            gifUrls: ["Test entry gif url"]
+            gifUrl: "test gif url"
         },
         comments: [],
         emojis: {
@@ -83,7 +83,7 @@ describe('API server', () => {
                     "title": "test tile",
                     "body": {
                         "text": "test body",
-                        "gifUrls": []
+                        "gifUrl": "test gif url"
                     },
                     "comments": [
                         {
