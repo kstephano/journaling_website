@@ -65,20 +65,18 @@ class Entry {
      * @returns An array of 12 entries that correspond to the given page number.
      */
     static getEntriesByPageNumber(pageNum) {
-        let startIndex = (pageNum - 1) * 12;
-        let entriesForPage = [];
-
-        // check if starting index exceeds the length of the entriesData array, and throw and error if true
-        if (startIndex > entriesData.length || startIndex < 0) {
+        const pageSize = 12;
+        let startIndex = (parseInt(pageNum) - 1) * pageSize;
+        let entriesForPage = entriesData.slice(startIndex, startIndex + pageSize)
+        if (entriesForPage.length === 0) {
             throw new Error('Given page number not in range');
-        } else {
-            // Iterate 12 times and push the corresponding entries onto the new array
-            for (let i = 0; i < 12 && startIndex < entriesData.length; i++) {
-                entriesForPage.push(entriesData[startIndex]);
-                startIndex++;
-            }
         }
-        return entriesForPage;
+        
+        return {
+            entries: entriesForPage,
+            totalEntries: entriesData.length,
+            totalPages: Math.ceil(entriesData.length / pageSize)
+        }
     }
 
     /**

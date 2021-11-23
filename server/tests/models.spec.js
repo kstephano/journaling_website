@@ -10,7 +10,7 @@ describe('Entry model', () => {
         title: "Test entry title",
         body: {
             text: "Test entry body",
-            gifUrls: ["Test entry gif url"]
+            gifUrl: "Test gif url"
         }
     };
 
@@ -38,7 +38,7 @@ describe('Entry model', () => {
         expect(entry.emojis.laughtCount).toBe(0);
         expect(entry.title).toBe("Test entry title");
         expect(entry.body.text).toBe("Test entry body");
-        expect(entry.body.gifUrls[0]).toBe("Test entry gif url");
+        expect(entry.body.gifUrl).toBe("Test gif url");
     });
 
     it('should return all entries', () => {
@@ -87,9 +87,10 @@ describe('Entry model', () => {
         Entry.create(testEntry, testUid);
         const retrievedEntries = Entry.getEntriesByPageNumber(1);
 
+        expect(retrievedEntries.totalEntries).toEqual(entriesData.length);
         expect(entriesData.length).toEqual(12);
-        expect(retrievedEntries.length).toEqual(12);
-        expect(entriesData).toEqual(retrievedEntries);
+        expect(retrievedEntries.entries.length).toEqual(12);
+        expect(entriesData).toEqual(retrievedEntries.entries);
     });
 
     it('should throw an error if a page number is given is too big for the entriesData array', () => {

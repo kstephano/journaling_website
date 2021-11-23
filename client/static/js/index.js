@@ -23,17 +23,3 @@ document.querySelector("#greyed-out").addEventListener("click", () => {
 
 })
 
-// async function test() {
-//     let response = await fetch(`https://api.giphy.com/v1/gifs/07h85fP8YleCWGRSjV?api_key=q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy`);
-//     let data = await response.json();
-//     let image = document.createElement("img");
-//     image.setAttribute("src", data.data.embed_url);
-//     document.querySelector("#gallery").appendChild(image);
-// }
-
-// test();
-
-
-
-
-
