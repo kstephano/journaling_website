@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "browserify ./static/js/index.js ./static/js/model.js > bundle.js",
-    "dev": "watchify ./static/js/index.js ./static/js/model.js -o bundle.js"
+    "bundle": "browserify ./static/js/index.js ./static/js/model.js > bundle.js && browserify ./static/js/entry.js > entryBundle.js",
+    "dev": "watchify ./static/js/index.js ./static/js/model.js -o bundle.js && watchify ./static/js/entry.js -o entryBundle.js"
   },
   "author": "",
   "license": "ISC",

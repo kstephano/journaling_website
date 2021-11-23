@@ -143,9 +143,9 @@ getPosts();
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
 
-    let post = postArray.filter(post => post.id === id)[0]
-    let comments = post.comments
-    console.log(id)
+    // let post = postArray.filter(post => post.id === id)[0]
+    // let comments = post.comments
+    // console.log(id)
     try {
         let res = await fetch(`http://localhost:3000/search/${id}`)
         let data = await res.json()

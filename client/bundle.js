@@ -851,6 +851,9 @@ let uniqueID = document.querySelector('#unique-id')
 let commentArea = document.querySelector('.inner-comment-box')
 
 uniqueID.textContent = `Your Unique ID is: ${localStorage.getItem("id")}`
+uniqueID.addEventListener("click", () => {
+    uniqueID.classList.toggle("text-hidden")
+})
 
 let commentButtons = document.querySelectorAll(".comments-button")
 
@@ -1010,9 +1013,9 @@ getPosts();
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
 
-    let post = postArray.filter(post => post.id === id)[0]
-    let comments = post.comments
-    console.log(id)
+    // let post = postArray.filter(post => post.id === id)[0]
+    // let comments = post.comments
+    // console.log(id)
     try {
         let res = await fetch(`http://localhost:3000/search/${id}`)
         let data = await res.json()
@@ -1083,6 +1086,7 @@ async function postComment(e){
         e.target.commentInput.value = ""
     }
 }
+let homepage = "http//:localhost:3000"
 
 async function getSpecificPost(id) {
     let res = await fetch(`${homepage}/search/${id}`)
@@ -1115,4 +1119,5 @@ async function getPosts(e) {
         console.log(err)
     }
 }
+
 },{"uuid":1}]},{},[16,17]);
