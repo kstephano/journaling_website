@@ -109,12 +109,11 @@ describe('API server', () => {
             .expect('Entry not found', done)
     });
 
-    it('responds to get /search/page/:num with ', async () => {
-        const pageOneEntries = entriesData.slice(0, 11);
-        const data = await request(api).get('/search/1').body;
+    it('responds to get /search/page/:num with 12 entries', async () => {
+        const result = await request(api).get('/search/page/1');
+        const data = await JSON.parse(result.text);
 
         expect(data.entries.length).toEqual(12);
-        expect(data.entries).toEqual(pageOneEntries);
     });
 
     it('responds to post /update/create with status 201', (done) => {
