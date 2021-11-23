@@ -122,15 +122,40 @@ describe('API server', () => {
             .post('/update/create')
             .send(testEntry)
             .set('Accept', 'application/json')
-            .expect(201)
-            .expect(testEntry, done);
+            .expect(201, done);
     });
 
-    // it('responds to post /update/comment/:id with status 201', (done) => {
-    //     request(api)
-    //         .post('/update/emojis/:id')
-    //         .send()
-    // })
+    it('responds to post /update/comments/:id with status 201', (done) => {
+        request(api)
+            .post('/update/comments/test id')
+            .send({ id: "test comment id", timestamp: "test timestamp", body: "comment contents" })
+            .set('Accept', 'application/json')
+            .expect(201, done);
+    });
+
+    it('responds to update comments on an invalid entry id with status 404', (done) => {
+        request(api)
+            .post('/update/comments/invalid id')
+            .send({ id: "test comment id", timestamp: "test timestamp", body: "comment contents" })
+            .set('Accept', 'application/json')
+            .expect(404, done);
+    });
+
+    it('responds to post /update/emojis/:id with status 201', (done) => {
+        request(api)
+            .post('/update/emojis/test id')
+            .send({ likeCount: 1, loveCount: 0, laughCount: 0 })
+            .set('Accept', 'application/json')
+            .expect(201, done);
+    });
+
+    it('responds to update emojis on an invalid entry id with status 404', (done) => {
+        request(api)
+            .post('/update/emojis/invalid id')
+            .send({ likeCount: 1, loveCount: 0, laughCount: 0 })
+            .set('Accept', 'application/json')
+            .expect(404, done);
+    });
 
     it('responds to delete /delete/:id with status 204', async () => {
         await request(api).delete('/delete/test id').expect(204);
