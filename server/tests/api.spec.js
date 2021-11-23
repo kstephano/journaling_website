@@ -15,7 +15,7 @@ describe('API server', () => {
         title: "Test entry title",
         body: {
             text: "Test entry body",
-            gifUrls: ["Test entry gif url"]
+            gifUrl: "test gif url"
         },
         comments: [],
         emojis: {
@@ -83,7 +83,7 @@ describe('API server', () => {
                     "title": "test tile",
                     "body": {
                         "text": "test body",
-                        "gifUrls": []
+                        "gifUrl": "test gif url"
                     },
                     "comments": [
                         {
@@ -114,6 +114,7 @@ describe('API server', () => {
         const data = await JSON.parse(result.text);
 
         expect(data.entries.length).toEqual(12);
+        expect(data.entries).toEqual(entriesData.slice(0, 12));
     });
 
     it('responds to post /update/create with status 201', (done) => {
@@ -161,7 +162,6 @@ describe('API server', () => {
         const result = await (await request(api).get('/search/all')).text;
         const data = await JSON.parse(result);
 
-        console.log(data);
         expect(data.entries.length).toBe(12);
     });
 })
