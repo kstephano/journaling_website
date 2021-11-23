@@ -2,12 +2,10 @@ const express = require('express')
 const Entry = require('../models/entry')
 const queryRouter = express.Router()
 
-const response = (data) => { return { entries: data } }
-
 // get all entries
 queryRouter.get('/all', function (req, res) {
   try{
-    res.json(response(Entry.all))
+    res.status(200).json({ entries: Entry.all })
   } catch(err) {
     res.status(404).send(err.message);
   }
@@ -16,7 +14,7 @@ queryRouter.get('/all', function (req, res) {
 // get entries by page
 queryRouter.get('/page/:num', function (req, res) {
   try{
-    res.json(response(Entry.getEntriesByPageNumber(req.params.num)))
+    res.status(200).json(Entry.getEntriesByPageNumber(req.params.num))
   } catch(err) {
     res.status(404).send(err.message);
   }
@@ -27,7 +25,7 @@ queryRouter.get('/:id', function (req, res) {
   try{
     let entry = Entry.findById(req.params.id)
     if(entry)
-      res.json({ entry: entry })
+      res.status(200).json({ entry: entry })
     else
       throw new Error("Entry not found")
   } catch(err) {
