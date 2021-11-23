@@ -87,9 +87,10 @@ describe('Entry model', () => {
         Entry.create(testEntry, testUid);
         const retrievedEntries = Entry.getEntriesByPageNumber(1);
 
+        expect(retrievedEntries.totalEntries).toEqual(entriesData.length);
         expect(entriesData.length).toEqual(12);
-        expect(retrievedEntries.length).toEqual(12);
-        expect(entriesData).toEqual(retrievedEntries);
+        expect(retrievedEntries.entries.length).toEqual(12);
+        expect(entriesData).toEqual(retrievedEntries.entries);
     });
 
     it('should throw an error if a page number is given is too big for the entriesData array', () => {
