@@ -14,6 +14,9 @@ let pageNum = 1;
 let form = document.querySelector('#comment-form')
 form.addEventListener("submit", postComment)
 
+let loadBtn = document.querySelector("#load-btn");
+loadBtn.addEventListener("click", getPosts)
+
 let newestArray = [];
 
 let postArray = [];
@@ -135,7 +138,7 @@ class Post {
 
 }
 
-getPosts(pageNum);
+getPosts();
 
 function appendComments(id) {
     let post = postArray.filter(post => post.id === id)[0]
@@ -213,16 +216,20 @@ async function getSpecificPost(id) {
     
 }
 
-async function getPosts(num) {
-    response = await fetch(`http://localhost:3000/search/page/${num}`);
-    num++
-    data = await response.json();
-    console.log(data)
-    data.entries.forEach(post => {
-        if(!postArray.includes(post)){
-            newestArray.push(post);
-            postArray.push(post);
-        };
-    });
-    Post.drawAll();
+async function getPosts(e) {
+    try{
+        response = await fetch(`http://localhost:3000/search/page/${pageNum}`);
+        data = await response.json();
+        console.log(data)
+        data.entries.forEach(post => {
+            if(!postArray.includes(post)){
+                newestArray.push(post);
+                postArray.push(post);
+            };
+        });
+        Post.drawAll();
+        pageNum++
+    } catch(err) {
+        console.log(err)
+    }
 }
