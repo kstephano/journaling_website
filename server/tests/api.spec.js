@@ -114,6 +114,7 @@ describe('API server', () => {
         const data = await JSON.parse(result.text);
 
         expect(data.entries.length).toEqual(12);
+        expect(data.entries).toEqual(entriesData.slice(0, 12));
     });
 
     it('responds to post /update/create with status 201', (done) => {
