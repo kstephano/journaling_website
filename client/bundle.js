@@ -1,198 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const uuid = require('uuid');
-
-if (!uuid.validate(localStorage.getItem("id"))) {
-    localStorage.removeItem("id")
-    localStorage.setItem("id", uuid.v4())
-}
-
-console.log(uuid.v4())
-console.log(localStorage.getItem("id"))
-
-
-let greyBox = document.querySelector("#greyed-out")
-let commentBox = document.querySelector('#comment-section')
-
-let uniqueID = document.querySelector('#unique-id')
-
-uniqueID.textContent = `Your Unique ID is: ${localStorage.getItem("id")}`
-
-let commentButtons = document.querySelectorAll(".comments-button")
-// commentButtons.forEach(commentBut => commentBut.addEventListener("click", () => {
-//     greyBox.style.zIndex = "99"
-//     commentBox.style.zIndex = "100"
-// }))
-
-let emojiButtons = document.querySelectorAll(".emoji-button")
-// emojiButtons.forEach(emojiButton => {
-//     emojiButton.addEventListener("click", () => {
-//         // console.log("im being pressed")
-//         emojiButton.classList.toggle("emoji-clicked")
-//     })
-// })
-
-document.querySelector("#greyed-out").addEventListener("click", () => {
-    greyBox.style.zIndex = "-100"
-    commentBox.style.zIndex = "-100"
-    commentBox.textContent = ""
-})
-
-// async function init() {
-//     // let res = await fetch('http//:localhost:3000/getposts')
-//     // let data = await res.json()
-//     let listOfPosts = templatePosts
-
-// }
-
-// function createPost(postJSON) {
-//     let postCard = document.createElement("div").classList.add("post-card")
-
-// }
-
-// let templatePosts = [
-//     {   
-//         id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
-//         time: 1637585802352,
-//         title: "Post Heading",
-//         body: {text: "Body text", gif: "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
-//         comments: [{id: "96584286-4b00-48da-bc1d-fa1eb82a5cee", time: 1637585812352, body: "comment 1"}, 
-//         {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
-//         emojis: {"emoji1": 0, "emoji2": 5, "emoji3": 11}
-//     }
-// ]
-
-// // let currentUTCTimestap = currentLocalTimestap.
-// let date = Date.now();
-
-// console.log(Date(date))
-
-},{"uuid":3}],2:[function(require,module,exports){
-
-let templatePost = {   
-    id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
-    time: 1637585802352,
-    title: "Post Heading",
-    body: {text: "Body text", gif: "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
-    comments: [{id: "96584286-4b00-48da-bc1d-fa1eb82a5cee", time: 1637585812352, body: "comment 1"}, 
-    {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
-    emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
-}
-
-let postArray = [templatePost]
-
-class Post {
-    constructor(data) {
-        this.id = data.id
-        this.timestamp = data.timestamp
-        this.title = data.title;
-        this.body = data.body.text;
-        this.gifUrl = data.body.gif;
-        this.comments = data.comments;
-        this.emoji1 = data.emojis.emoji1;
-        this.emoji2 = data.emojis.emoji2;
-        this.emoji3 = data.emojis.emoji3;
-    }
-
-    static get all() {
-        const posts = postArray.map((data) => new Post(data));
-        return posts;
-    }
-
-    static findById(id) {
-        try {
-            const data = postArray.filter((entry) => entry.id === id)[0];
-            const entry = new Post(data);
-            return entry;
-        } catch(e) {
-            throw new Error('Entry does not exist in the data');
-        }
-    }
-
-    get draw() {
-        let postCard = document.createElement("div")
-        postCard.classList.add("post-card")
-        let postTop = document.createElement("div")
-        postTop.classList.add("post-top")
-        let postBody = document.createElement("div")
-        postBody.classList.add("post-body")
-        let postBottom = document.createElement("div")
-        postBottom.classList.add("post-bottom")
-        let postHeading = document.createElement("h4")
-        postHeading.classList.add("post-heading")
-        let postBodyGif = document.createElement("img")
-        postBodyGif.classList.add("post-body-gif")
-        let postBodyText = document.createElement("p")
-        postBodyText.classList.add("post-body-text")
-        let emojisContainer = document.createElement("div")
-        emojisContainer.classList.add("emojis-container")
-        let emojiButton1 = document.createElement("div")
-        emojiButton1.classList.add("emoji-button")
-        let emojiButton2 = document.createElement("div")
-        emojiButton2.classList.add("emoji-button")
-        let emojiButton3 = document.createElement("div")
-        emojiButton3.classList.add("emoji-button")
-        let commentsButton = document.createElement("div")
-        commentsButton.classList.add("comments-button")
-        
-        let postCardList = [postTop, postBody, postBottom]
-        let postBodyList = [postBodyGif, postBodyText]
-        let postBottomList = [emojisContainer, commentsButton]
-        let emojisContainerList = [emojiButton1, emojiButton2, emojiButton3]
-
-        postHeading.textContent = this.title
-        postBodyGif.src = this.gifUrl
-        postBodyText.textContent = this.body
-        emojiButton1.textContent = this.emoji1
-        emojiButton2.textContent = this.emoji2
-        emojiButton3.textContent = this.emoji3
-        commentsButton.textContent = "comments"
-        commentsButton.id = this.id
-
-        let gallery = document.querySelector('#gallery')
-        let greyBox = document.querySelector("#greyed-out")
-        let commentBox = document.querySelector('#comment-section')
-
-        gallery.append(postCard)
-        postCardList.forEach(element => {
-            postCard.append(element)
-        })
-        postTop.append(postHeading)
-        postBodyList.forEach(element => {
-            postBody.append(element)
-        })
-        postBottomList.forEach(element => {
-            postBottom.append(element)
-        })
-        commentsButton.addEventListener("click", () => {
-            greyBox.style.zIndex = "99"
-            commentBox.style.zIndex = "100"
-            commentBox.textContent = ""
-            
-
-        })
-        emojisContainerList.forEach(element => {
-            emojisContainer.append(element)
-            element.addEventListener("click", () => {
-            element.classList.toggle("emoji-clicked")}
-        )})
-
-
-    }
-
-    static drawAll(postsArray) {
-        let arr = Post.all
-        arr.forEach(post => {
-            post.draw
-        })
-    }
-
-
-}
-
-
-Post.drawAll(postArray)
-
-},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -272,7 +78,7 @@ var _stringify = _interopRequireDefault(require("./stringify.js"));
 var _parse = _interopRequireDefault(require("./parse.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./nil.js":5,"./parse.js":6,"./stringify.js":10,"./v1.js":11,"./v3.js":12,"./v4.js":14,"./v5.js":15,"./validate.js":16,"./version.js":17}],4:[function(require,module,exports){
+},{"./nil.js":3,"./parse.js":4,"./stringify.js":8,"./v1.js":9,"./v3.js":10,"./v4.js":12,"./v5.js":13,"./validate.js":14,"./version.js":15}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -496,7 +302,7 @@ function md5ii(a, b, c, d, x, s, t) {
 
 var _default = md5;
 exports.default = _default;
-},{}],5:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -505,7 +311,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = '00000000-0000-0000-0000-000000000000';
 exports.default = _default;
-},{}],6:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -551,7 +357,7 @@ function parse(uuid) {
 
 var _default = parse;
 exports.default = _default;
-},{"./validate.js":16}],7:[function(require,module,exports){
+},{"./validate.js":14}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -560,7 +366,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
 exports.default = _default;
-},{}],8:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -587,7 +393,7 @@ function rng() {
 
   return getRandomValues(rnds8);
 }
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -692,7 +498,7 @@ function sha1(bytes) {
 
 var _default = sha1;
 exports.default = _default;
-},{}],10:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -732,7 +538,7 @@ function stringify(arr, offset = 0) {
 
 var _default = stringify;
 exports.default = _default;
-},{"./validate.js":16}],11:[function(require,module,exports){
+},{"./validate.js":14}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -840,7 +646,7 @@ function v1(options, buf, offset) {
 
 var _default = v1;
 exports.default = _default;
-},{"./rng.js":8,"./stringify.js":10}],12:[function(require,module,exports){
+},{"./rng.js":6,"./stringify.js":8}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -857,7 +663,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const v3 = (0, _v.default)('v3', 0x30, _md.default);
 var _default = v3;
 exports.default = _default;
-},{"./md5.js":4,"./v35.js":13}],13:[function(require,module,exports){
+},{"./md5.js":2,"./v35.js":11}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -936,7 +742,7 @@ function _default(name, version, hashfunc) {
   generateUUID.URL = URL;
   return generateUUID;
 }
-},{"./parse.js":6,"./stringify.js":10}],14:[function(require,module,exports){
+},{"./parse.js":4,"./stringify.js":8}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -974,7 +780,7 @@ function v4(options, buf, offset) {
 
 var _default = v4;
 exports.default = _default;
-},{"./rng.js":8,"./stringify.js":10}],15:[function(require,module,exports){
+},{"./rng.js":6,"./stringify.js":8}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -991,7 +797,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const v5 = (0, _v.default)('v5', 0x50, _sha.default);
 var _default = v5;
 exports.default = _default;
-},{"./sha1.js":9,"./v35.js":13}],16:[function(require,module,exports){
+},{"./sha1.js":7,"./v35.js":11}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1009,7 +815,7 @@ function validate(uuid) {
 
 var _default = validate;
 exports.default = _default;
-},{"./regex.js":7}],17:[function(require,module,exports){
+},{"./regex.js":5}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1031,4 +837,244 @@ function version(uuid) {
 
 var _default = version;
 exports.default = _default;
-},{"./validate.js":16}]},{},[1,2]);
+},{"./validate.js":14}],16:[function(require,module,exports){
+const uuid = require('uuid');
+
+if (!uuid.validate(localStorage.getItem("id"))) {
+    localStorage.removeItem("id")
+    localStorage.setItem("id", uuid.v4())
+}
+
+let greyBox = document.querySelector("#greyed-out")
+let commentBox = document.querySelector('#comment-section')
+let uniqueID = document.querySelector('#unique-id')
+let commentArea = document.querySelector('.inner-comment-box')
+
+uniqueID.textContent = `Your Unique ID is: ${localStorage.getItem("id")}`
+
+let commentButtons = document.querySelectorAll(".comments-button")
+
+let emojiButtons = document.querySelectorAll(".emoji-button")
+
+document.querySelector("#greyed-out").addEventListener("click", () => {
+    greyBox.style.zIndex = "-100"
+    commentBox.style.zIndex = "-100"
+    commentArea.textContent = ''
+
+})
+
+
+
+
+},{"uuid":1}],17:[function(require,module,exports){
+const uuid = require('uuid');
+
+let templatePost = {   
+    id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
+    time: 1637585802352,
+    title: "Post Heading",
+    body: {text: "Body text", gif: "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
+    comments: [{id: "96584286-4b00-48da-bc1d-fa1eb82a5cee", time: 1637585812352, body: "comment 1"}, 
+    {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
+    emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
+}
+
+let form = document.querySelector('#comment-form')
+form.addEventListener("submit", postComment)
+
+let postArray = [templatePost, templatePost, templatePost, templatePost, templatePost, templatePost, templatePost]
+
+let holdsPostID;
+
+class Post {
+    constructor(data) {
+        this.id = data.id
+        this.timestamp = data.timestamp
+        this.title = data.title;
+        this.body = data.body.text;
+        this.gifUrl = data.body.gif;
+        this.comments = data.comments;
+        this.emoji1 = data.emojis.emoji1;
+        this.emoji2 = data.emojis.emoji2;
+        this.emoji3 = data.emojis.emoji3;
+    }
+
+    static get all() {
+        const posts = postArray.map((data) => new Post(data));
+        return posts;
+    }
+
+    static findById(id) {
+        try {
+            const data = postArray.filter((entry) => entry.id === id)[0];
+            const entry = new Post(data);
+            return entry;
+        } catch(e) {
+            throw new Error('Entry does not exist in the data');
+        }
+    }
+
+    get draw() {
+        let postCard = document.createElement("div")
+        postCard.classList.add("post-card")
+        let postTop = document.createElement("div")
+        postTop.classList.add("post-top")
+        let postBody = document.createElement("div")
+        postBody.classList.add("post-body")
+        let postBottom = document.createElement("div")
+        postBottom.classList.add("post-bottom")
+        let postHeading = document.createElement("h4")
+        postHeading.classList.add("post-heading")
+        let postBodyGif = document.createElement("img")
+        postBodyGif.classList.add("post-body-gif")
+        let postBodyText = document.createElement("p")
+        postBodyText.classList.add("post-body-text")
+        let emojisContainer = document.createElement("div")
+        emojisContainer.classList.add("emojis-container")
+        let emojiButton1 = document.createElement("div")
+        emojiButton1.classList.add("emoji-button")
+        let emojiButton2 = document.createElement("div")
+        emojiButton2.classList.add("emoji-button")
+        let emojiButton3 = document.createElement("div")
+        emojiButton3.classList.add("emoji-button")
+        let commentsButton = document.createElement("div")
+        commentsButton.classList.add("comments-button")
+        
+        let postCardList = [postTop, postBody, postBottom]
+        let postBodyList = [postBodyGif, postBodyText]
+        let postBottomList = [emojisContainer, commentsButton]
+        let emojisContainerList = [emojiButton1, emojiButton2, emojiButton3]
+
+        postHeading.textContent = this.title
+        postBodyGif.src = this.gifUrl
+        postBodyText.textContent = this.body
+        emojiButton1.textContent = this.emoji1
+        emojiButton2.textContent = this.emoji2
+        emojiButton3.textContent = this.emoji3
+        commentsButton.textContent = "comments"
+        commentsButton.id = this.id
+
+        let gallery = document.querySelector('#gallery')
+        let greyBox = document.querySelector("#greyed-out")
+        let commentBox = document.querySelector('#comment-section')
+        let innerCommentBox = document.querySelector('.inner-comment-box')
+        let commentScrollSection = document.querySelector('.comment-create')
+
+        gallery.append(postCard)
+        postCardList.forEach(element => {
+            postCard.append(element)
+        })
+        postTop.append(postHeading)
+        postBodyList.forEach(element => {
+            postBody.append(element)
+        })
+        postBottomList.forEach(element => {
+            postBottom.append(element)
+        })
+        commentsButton.addEventListener("click", (e) => {
+            greyBox.style.zIndex = "99"
+            commentBox.style.zIndex = "100"
+            innerCommentBox.style.zIndex = "101"
+            commentScrollSection.style.zIndex = "101"
+            // console.log(e.target.id)
+            appendComments(e.target.id)
+            holdsPostID = e.target.id
+ 
+        })
+        emojisContainerList.forEach(element => {
+            emojisContainer.append(element)
+            element.addEventListener("click", () => {
+            element.classList.toggle("emoji-clicked")}
+        )})
+
+
+    }
+
+    static drawAll(postsArray) {
+        let arr = Post.all
+        arr.forEach(post => {
+            post.draw
+        })
+    }
+
+
+}
+
+
+
+function appendComments(id) {
+    let post = postArray.filter(post => post.id === id)[0]
+    // console.log(post.comments)
+    let comments = post.comments
+    // console.log(comments)
+    comments.forEach(comment => {
+        drawComment(comment)
+    })
+}
+
+function drawComment(comment) {
+    let commentCard = document.createElement("div")
+    commentCard.classList.add("comment-card")
+    let commentDate = document.createElement("p")
+    commentDate.classList.add("comment-date")
+    let commentBody = document.createElement("p")
+    commentBody.classList.add("comment-body")
+
+    commentCard.id = comment.id
+    commentDate.textContent = dateFormat(comment.time)
+    commentBody.textContent = comment.body
+    let commentCardList = [commentDate, commentBody]
+
+    let commentArea = document.querySelector('.inner-comment-box')
+    commentCardList.forEach(element => {
+        commentCard.append(element)
+    })
+
+    commentArea.append(commentCard)
+}
+
+Post.drawAll(postArray)
+
+// console.log(Date(1637585812352))
+
+function dateFormat(timestamp){
+    let date = new Date(timestamp)
+
+    return date.getHours()+":"+date.getMinutes()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
+}
+
+async function postComment(e){
+    e.preventDefault()
+    let input = e.target.commentInput.value
+    if (input){
+        // let commentID = uuid.v4()
+        let commentData = {
+            id: uuid.v4(),
+            body: input,
+            time: Date.now()
+        }
+
+        const options = {
+            method: "POST",
+            body: JSON.stringify(commentData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        // let res = await fetch(`/`, options)
+        // let data = await res.json()
+        drawComment(commentData)
+        e.target.commentInput.value = ""
+
+    }
+}
+let homepage = "http//:localhost:3000"
+
+async function getSpecificPost(id) {
+    let res = await fetch(`${homepage}/search/${id}`)
+    let data = await res.json()
+
+    
+}
+},{"uuid":1}]},{},[16,17]);

@@ -5,6 +5,8 @@ let entriesData = require('../data/entries');
 describe('Entry model', () => {
     const testUid = 12345;
     const testEntry = {
+        id: "another test id",
+        timestamp: "another test timestamp",
         title: "Test entry title",
         body: {
             text: "Test entry body",
@@ -19,8 +21,6 @@ describe('Entry model', () => {
 
     it('should make an instance of an entry', () => {
         const entry = new Entry({
-            id: "id loaded in from file",
-            timestamp: "timestamp loaded in from file",
             comments: [],
             emojis: {
                 likeCount: 0,
@@ -30,8 +30,8 @@ describe('Entry model', () => {
             ...testEntry
         });
         
-        expect(entry.id).toBe("id loaded in from file");
-        expect(entry.timestamp).toBe("timestamp loaded in from file");
+        expect(entry.id).toBe("another test id");
+        expect(entry.timestamp).toBe("another test timestamp");
         expect(entry.comments).toStrictEqual([]);
         expect(entry.emojis.likeCount).toBe(0);
         expect(entry.emojis.loveCount).toBe(0);
@@ -65,7 +65,7 @@ describe('Entry model', () => {
     });
 
     it('should delete an entry', () => {
-        Entry.deleteById(entriesData[1].id);
+        Entry.deleteById("another test id");
         entriesData = Entry.all; // update entriesData
   
         expect(entriesData.length).toEqual(1);
@@ -97,53 +97,38 @@ describe('Entry model', () => {
             Entry.getEntriesByPageNumber(5);
         }
         
-        expect(testError).toThrowError('Given page number exceeds entries array length');
+        expect(testError).toThrowError('Given page number not in range');
     });
 
     it('should be able to increment emojis.likeCount', () => {
         Entry.findById('test id').emojis.likeCount++;
 
-        expect(entriesData[0].emojis.likeCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.likeCount).toEqual(1);
     });
 
     it('should be able to increment emojis.loveCount', () => {
         Entry.findById('test id').emojis.loveCount++;
 
-        expect(entriesData[0].emojis.loveCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.loveCount).toEqual(1);
     });
 
     it('should be able to increment emojis.laughCount', () => {
         Entry.findById('test id').emojis.laughCount++;
-        expect(entriesData[0].emojis.laughCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.laughCount).toEqual(1);
     });
 
     it('should be able to update the comments', () => {
-        Entry.findById('test id').comments.push({ id: "second comment", timestamp: "time", body: "contents of second comment" });
+        Entry.addCommment('test id', { id: "second comment", timestamp: "time", body: "contents of second comment" })
 
-        expect(entriesData[0].comments.length).toEqual(2);
-        expect(entriesData[0].comments[1]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
-    });
-
-    it('should be able to use findById to add a comment', () => {
-        Entry.findById('test id').comments.push({
-            id: "third test comment",
-            timestamp: "time of comment",
-            body: "contents"
-        });
-
-        expect(entriesData[0].comments.length).toEqual(3);
-        expect(entriesData[0].comments[2]).toEqual({
-            id: "third test comment",
-            timestamp: "time of comment",
-            body: "contents"
-        });
+        expect(Entry.findById('test id').comments.length).toEqual(2);
+        expect(Entry.findById('test id').comments[0]).toEqual({ id: "second comment", timestamp: "time", body: "contents of second comment" });
     });
     
     it('should delete a comment', () => {
         Entry.deleteCommentById('third test comment', 'test id');
 
-        expect(entriesData[0].comments.length).toEqual(2);
-        expect(entriesData[0].comments).not.toContain({
+        expect(Entry.findById('test id').comments.length).toEqual(2);
+        expect(Entry.findById('test id').comments).not.toContain({
             id: "third test comment",
             timestamp: "time of comment",
             body: "contents"

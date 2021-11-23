@@ -27,7 +27,7 @@ main {
 #comment-section {
     position: fixed;
     display: grid;
-    grid-template-columns: 65% 35%;
+    grid-template-rows: 80% 20%;
     background-color: yellow;
     padding: 20px;
     z-index: -100;
@@ -39,19 +39,49 @@ main {
 }
 
 .inner-comment-box{
-    z-index: inherit;
+    z-index: -99;
     background-color: white;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.comment-card {
+    margin: 5px;
+    padding: 5px;
+    background-color: grey;
+    width: auto;
+    height: auto;
+}
+
+.comment-date {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.comment-body {
+    font-size: 20px;
+}
+
+
+.comment-create {
+    z-index: -99;
+    background-color: black;
     margin: auto;
     width: 100%;
     height: 100%;
 }
 
-.comment-scroll-section {
-    z-index: inherit;
-    background-color: black;
-    margin: auto;
-    width: 100%;
+#comment-form {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 90% 10%;
     height: 100%;
+}
+
+#comment-input {
+    resize: none;
 }
 
 #background-box {

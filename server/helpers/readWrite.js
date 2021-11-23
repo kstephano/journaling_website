@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-const entriesData = require('../data/entries');
 const Entry = require('../models/entry');
 
 /**
@@ -13,7 +12,7 @@ function readFromFile() {
         const parsedData = JSON.parse(jsonString);
         // iterate through parsed json array and push each entry onto the entriesData array
         parsedData.forEach(parsedDataObject => {
-            entriesData.push(parsedDataObject);
+            Entry.create(parsedDataObject)
         });
     } catch (err) {
         console.log(err);
@@ -26,7 +25,7 @@ function readFromFile() {
  * To be called when the server is closed - server.close((err) => { // TODO })
  */
 function writeToFile() {
-    const entriesDataStringified = JSON.stringify(entriesData); // stringify the entriesData array
+    const entriesDataStringified = JSON.stringify(Entry.all); // stringify the entriesData array
 
     // write to the json file, overwriting any data already in the file
     fs.writeFile('./data/entries.json', entriesDataStringified, (err) => {

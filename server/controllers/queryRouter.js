@@ -13,6 +13,15 @@ queryRouter.get('/all', function (req, res) {
   }
 })
 
+// get entries by page
+queryRouter.get('/page/:num', function (req, res) {
+  try{
+    res.json(response(Entry.getEntriesByPageNumber(req.params.num)))
+  } catch(err) {
+    res.status(404).send(err.message);
+  }
+})
+
 // search by id
 queryRouter.get('/:id', function (req, res) {
   try{
