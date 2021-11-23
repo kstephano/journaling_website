@@ -62,7 +62,6 @@ h2 {
 
 footer {
     margin-top: auto;
-    justify-self: flex-end;
     display: flex;
     justify-content: space-between;
     background-color: var(--colour-neutral-700);
