@@ -23,5 +23,3 @@ document.querySelector("#greyed-out").addEventListener("click", () => {
 
 })
 
-
-

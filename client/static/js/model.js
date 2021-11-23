@@ -205,6 +205,13 @@ let homepage = "http//:localhost:3000"
 async function getSpecificPost(id) {
     let res = await fetch(`${homepage}/search/${id}`)
     let data = await res.json()
+}
 
+let postEmojisData = [
+    {id: "kasbdasjdbashdbaj", emoji1: true, emoji2: false, emoji3: true}
+]
+
+
+function emojiClick() {
     
 }
