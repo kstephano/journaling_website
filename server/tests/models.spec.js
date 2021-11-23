@@ -16,7 +16,7 @@ describe('Entry model', () => {
 
     // Read from the entries.json file to populate the entries array with 1 test entry
     beforeAll(() => {
-        helpers.readFromFile();
+        helpers.readFromFile(); // 2 entries
     });
 
     it('should make an instance of an entry', () => {
@@ -50,7 +50,7 @@ describe('Entry model', () => {
     it('should return an entry', () => {
         const entry = Entry.findById('test id');
 
-        expect(entry).toEqual(entriesData[0]);
+        expect(entry).toEqual(entriesData[1]);
     });
 
     it('should return undefined if given an invalid id', () => {
@@ -60,37 +60,34 @@ describe('Entry model', () => {
     });
 
     it('should create an entry', () => {
-        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid); // 3rd entry
         expect(entriesData[1]).toHaveProperty('id', 'timestamp', 'title', 'body', 'comments', 'emojis');
     });
 
     it('should delete an entry', () => {
-        Entry.deleteById("another test id");
+        Entry.deleteById("another test id"); // 2 entries
         entriesData = Entry.all; // update entriesData
   
-        expect(entriesData.length).toEqual(1);
-        expect(entriesData).not.toContain(entriesData[1]);
+        expect(entriesData.length).toEqual(2);
     });
 
     it('should be able to get a list of 12 entries given a valid page number', () => {
-        // add entries so that there are 12 in the entriesData array
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
+        // add entries so that there are 13 in the entriesData array
+        Entry.create(testEntry, testUid); // 3
+        Entry.create(testEntry, testUid); // 4
+        Entry.create(testEntry, testUid); // 5
+        Entry.create(testEntry, testUid); // 6
+        Entry.create(testEntry, testUid); // 7
+        Entry.create(testEntry, testUid); // 8
+        Entry.create(testEntry, testUid); // 9
+        Entry.create(testEntry, testUid); // 10
+        Entry.create(testEntry, testUid); // 11
+        Entry.create(testEntry, testUid); // 12
+        Entry.create(testEntry, testUid); // 13
         const retrievedEntries = Entry.getEntriesByPageNumber(1);
 
         expect(retrievedEntries.totalEntries).toEqual(entriesData.length);
-        expect(entriesData.length).toEqual(12);
         expect(retrievedEntries.entries.length).toEqual(12);
-        expect(entriesData).toEqual(retrievedEntries.entries);
     });
 
     it('should throw an error if a page number is given is too big for the entriesData array', () => {

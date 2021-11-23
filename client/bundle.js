@@ -877,14 +877,19 @@ let templatePost = {
     {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
     emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
 }
+let pageNum = 1;
 
 // Listens for when 
 let form = document.querySelector('#comment-form')
 form.addEventListener("submit", postComment)
 
-// Array of Post objects
-let postArray = [templatePost, templatePost, templatePost, templatePost, templatePost, templatePost, templatePost]
-// holds the ID of the last Post user interacted with
+let loadBtn = document.querySelector("#load-btn");
+loadBtn.addEventListener("click", getPosts)
+
+let newestArray = [];
+
+let postArray = [];
+
 let holdsPostID;
 
 // Class used when handling Posts
@@ -895,7 +900,7 @@ class Post {
         this.timestamp = data.timestamp
         this.title = data.title;
         this.body = data.body.text;
-        this.gifUrl = data.body.gif;
+        this.gifUrl = data.body.gifUrl;
         this.comments = data.comments;
         this.emoji1 = data.emojis.emoji1;
         this.emoji2 = data.emojis.emoji2;
@@ -904,7 +909,7 @@ class Post {
 
     // returns an array of Post objects using postArray
     static get all() {
-        const posts = postArray.map((data) => new Post(data));
+        const posts = newestArray.map((data) => new Post(data));
         return posts;
     }
 
@@ -996,11 +1001,18 @@ class Post {
         arr.forEach(post => {
             post.draw
         })
+        newestArray = [];
     }
 }
 
+getPosts();
+
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
+
+    let post = postArray.filter(post => post.id === id)[0]
+    let comments = post.comments
+    console.log(id)
     try {
         let res = await fetch(`http://localhost:3000/search/${id}`)
         let data = await res.json()
@@ -1038,8 +1050,6 @@ function drawComment(comment, append=true) {
     append ? commentArea.append(commentCard) : commentArea.prepend(commentCard)
 }
 
-// Initally loads all Posts in postArray
-Post.drawAll(postArray)
 
 // used to format the date from a timestamp
 function dateFormat(timestamp){
@@ -1074,4 +1084,35 @@ async function postComment(e){
     }
 }
 
+async function getSpecificPost(id) {
+    let res = await fetch(`${homepage}/search/${id}`)
+    let data = await res.json()
+}
+
+let postEmojisData = [
+    {id: "kasbdasjdbashdbaj", emoji1: true, emoji2: false, emoji3: true}
+]
+
+
+function emojiClick() {
+    
+}
+
+async function getPosts(e) {
+    try{
+        response = await fetch(`http://localhost:3000/search/page/${pageNum}`);
+        data = await response.json();
+        console.log(data)
+        data.entries.forEach(post => {
+            if(!postArray.includes(post)){
+                newestArray.push(post);
+                postArray.push(post);
+            };
+        });
+        Post.drawAll();
+        pageNum++
+    } catch(err) {
+        console.log(err)
+    }
+}
 },{"uuid":1}]},{},[16,17]);
