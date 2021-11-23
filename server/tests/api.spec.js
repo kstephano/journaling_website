@@ -37,19 +37,19 @@ describe('API server', () => {
 
     beforeAll(() => {
         // read the entries from the entries.json file
-        readFromFile();
+        readFromFile(); // 1 entry
         // add new test entries
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
-        Entry.create(testEntry, testUid);
+        Entry.create(testEntry, testUid); // 2
+        Entry.create(testEntry, testUid); // 3
+        Entry.create(testEntry, testUid); // 4
+        Entry.create(testEntry, testUid); // 5
+        Entry.create(testEntry, testUid); // 6
+        Entry.create(testEntry, testUid); // 7
+        Entry.create(testEntry, testUid); // 8
+        Entry.create(testEntry, testUid); // 9
+        Entry.create(testEntry, testUid); // 10
+        Entry.create(testEntry, testUid); // 11
+        Entry.create(testEntry, testUid); // 12
         // start the server and store it in the api variable
         api = server.listen(5000, () => {
             console.log('Test server running on port 5000');
@@ -109,16 +109,15 @@ describe('API server', () => {
             .expect('Entry not found', done)
     });
 
-    it('responds to get /search/page/:num with ', async () => {
-        const pageOneEntries = entriesData.slice(0, 11);
-        const data = await request(api).get('/search/1').body;
+    it('responds to get /search/page/:num with 12 entries', async () => {
+        const result = await request(api).get('/search/page/1');
+        const data = await JSON.parse(result.text);
 
         expect(data.entries.length).toEqual(12);
-        expect(data.entries).toEqual(pageOneEntries);
     });
 
     it('responds to post /update/create with status 201', (done) => {
-        request(api)
+        request(api) // 13th entry added
             .post('/update/create')
             .send(testEntry)
             .set('Accept', 'application/json')
@@ -158,9 +157,11 @@ describe('API server', () => {
     });
 
     it('responds to delete /delete/:id with status 204', async () => {
-        await request(api).delete('/delete/test id').expect(204);
-        const updatedEntries = await request(api).get('/all');
+        await request(api).delete('/delete/test id').expect(204); // 13th entry removed
+        const result = await (await request(api).get('/search/all')).text;
+        const data = await JSON.parse(result);
 
-        expect(updatedEntries.body.length).toBe(11);
+        console.log(data);
+        expect(data.entries.length).toBe(12);
     });
 })

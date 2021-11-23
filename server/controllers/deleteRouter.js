@@ -10,7 +10,6 @@ deleteRouter.delete('/:id', function (req, res) {
     if(entry) {
       Entry.deleteById(req.params.id)
       res.sendStatus(204)
-      //res.json(result)
     }
     else
       throw new Error(`${req.params.id} does not exist`)
