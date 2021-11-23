@@ -1,7 +1,8 @@
+// let uuid = require('uuid');
 let searchBtn = document.querySelector("#search-icon");
 let gifCont = document.querySelector(".gif-scrolling-displayer");
 
-const apiId = "3QiTkeYYexhSYHU3M2hEaHXVgZ5ogLkN";
+const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy";
 
 let noGif = document.createElement("img");
 noGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
@@ -50,10 +51,10 @@ function divBuilder(data, div){
         let img = document.createElement('img');
         img.setAttribute("src", gif.url);
         img.setAttribute("alt", gifs[i].title);
-        img.setAttribute("value", gifs[i].embed_url);
-        img.setAttribute("id", gifs[i].embed_url)
+        img.setAttribute("value", gifs[i].images.original.url);
+        img.setAttribute("id", gifs[i].images.original.url)
         div.appendChild(img);
-        let listen = document.getElementById(gifs[i].embed_url);
+        let listen = document.getElementById(gifs[i].images.original.url);
         listen.addEventListener("click", setGif);
     }
 }
