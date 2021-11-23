@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 
+// Example Post object used for testing purposes
 let templatePost = {   
     id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
     time: 1637585802352,
@@ -10,14 +11,18 @@ let templatePost = {
     emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
 }
 
+// Listens for when 
 let form = document.querySelector('#comment-form')
 form.addEventListener("submit", postComment)
 
+// Array of Post objects
 let postArray = [templatePost, templatePost, templatePost, templatePost, templatePost, templatePost, templatePost]
-
+// holds the ID of the last Post user interacted with
 let holdsPostID;
 
+// Class used when handling Posts
 class Post {
+    // Post properties
     constructor(data) {
         this.id = data.id
         this.timestamp = data.timestamp
@@ -30,6 +35,7 @@ class Post {
         this.emoji3 = data.emojis.emoji3;
     }
 
+    // returns an array of Post objects using postArray
     static get all() {
         const posts = postArray.map((data) => new Post(data));
         return posts;
@@ -45,6 +51,7 @@ class Post {
         }
     }
 
+    // used on Post objects, to load posts on the website
     get draw() {
         let postCard = document.createElement("div")
         postCard.classList.add("post-card")
@@ -108,69 +115,43 @@ class Post {
             commentBox.style.zIndex = "100"
             innerCommentBox.style.zIndex = "101"
             commentScrollSection.style.zIndex = "101"
-            // console.log(e.target.id)
-            
             appendComments(e.target.id)
-            
- 
         })
         emojisContainerList.forEach(element => {
             emojisContainer.append(element)
             element.addEventListener("click", () => {
             element.classList.toggle("emoji-clicked")}
         )})
-
-
     }
-
+    // calls draw method on each Post in array returned from Post.all
     static drawAll() {
         let arr = Post.all
         arr.forEach(post => {
             post.draw
         })
     }
-
-
 }
-
 
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
-    let post = postArray.filter(post => post.id === id)[0]
-    let comments = post.comments
-    console.log(id)
     try {
-        let res = await fetch(`http//:localhost:3000/search/${id}`)
-        console.log(res)
+        let res = await fetch(`http://localhost:3000/search/${id}`)
         let data = await res.json()
-        console.log(data)
         let newComments = data.entry.comments
-        console.log(id)
-        console.log(data)
         const index = postArray.findIndex(element => element.id == holdsPostID)
         postArray[index].comments = newComments
-
     } catch(e) {
         console.log(e)
     }
-    
+    let post = postArray.filter(post => post.id === id)[0]
+    let comments = post.comments
     comments.forEach(comment => {
         drawComment(comment)
     })
 }
 
-// old appendComments function, doesn't use fetch
-// function appendComments(id) {
-//     let post = postArray.filter(post => post.id === id)[0]
-//     // console.log(post.comments)
-//     let comments = post.comments
-//     // console.log(comments)
-//     comments.forEach(comment => {
-//         drawComment(comment)
-//     })
-// }
-
-function drawComment(comment) {
+// Appends on default a comment object to the comment Area
+function drawComment(comment, append=true) {
     let commentCard = document.createElement("div")
     commentCard.classList.add("comment-card")
     let commentDate = document.createElement("p")
@@ -182,37 +163,36 @@ function drawComment(comment) {
     commentDate.textContent = dateFormat(comment.time)
     commentBody.textContent = comment.body
     let commentCardList = [commentDate, commentBody]
-
     let commentArea = document.querySelector('.inner-comment-box')
     commentCardList.forEach(element => {
         commentCard.append(element)
     })
 
-    commentArea.prepend(commentCard)
+    append ? commentArea.append(commentCard) : commentArea.prepend(commentCard)
 }
 
+// Initally loads all Posts in postArray
 Post.drawAll(postArray)
 
-// console.log(Date(1637585812352))
-
+// used to format the date from a timestamp
 function dateFormat(timestamp){
     let date = new Date(timestamp)
 
     return date.getHours()+":"+date.getMinutes()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
 }
 
+// Runs when user clicks on submit comment. posts commment to server and prepends comment on client
 async function postComment(e){
     e.preventDefault()
     let input = e.target.commentInput.value
     if (input){
-        // let commentID = uuid.v4()
         let commentData = {
             id: uuid.v4(),
             body: input,
             time: Date.now()
         }
         const index = postArray.findIndex(element => element.id == holdsPostID)
-        postArray[index].comments.push(commentData)
+        postArray[index].comments.unshift(commentData)
 
         const options = {
             method: "POST",
@@ -221,26 +201,8 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-
-        // let res = await fetch(`/`, options)
-        // let data = await res.json()
-        drawComment(commentData)
+        let res = await fetch(`http://localhost:3000/update/comments/${holdsPostID}`, options)
+        drawComment(commentData, false)
         e.target.commentInput.value = ""
-
     }
-}
-let homepage = "http//:localhost:3000"
-
-async function getSpecificPost(id) {
-    let res = await fetch(`${homepage}/search/${id}`)
-    let data = await res.json()
-}
-
-let postEmojisData = [
-    {id: "kasbdasjdbashdbaj", emoji1: true, emoji2: false, emoji3: true}
-]
-
-
-function emojiClick() {
-    
 }

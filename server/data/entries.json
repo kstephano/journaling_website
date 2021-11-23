@@ -25,7 +25,7 @@
         "time": 1637585802352,
         "title": "Post Heading",
         "body": {"text": "Body text", "gif": "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
-        "comments": [{"id": "96584286-4b00-48da-bc1d-fa1eb82a5cee", "time": 1637585812352, "body": "comment 1"}, 
+        "comments": [{"id": "96584286-4b00-48da-bc1d-fa1eb82a5cee", "time": 1637585812352, "body": "I'm from the JSON"}, 
         {"id": "96584286-4b00-48da-bc1d-fa1eb82a5cea", "time": 1637585813352, "body": "comment 2"}],
         "emojis": {"emoji1": 0, "emoji2": 5, "emoji3": 11}
     }
