@@ -13,7 +13,7 @@ noGifOpt();
 gifTrend(gifCont);
 
 searchBtn.addEventListener("click", gifWindow);
-document.querySelector("#submit-btn").addEventListener("submit", upload)
+document.querySelector("form").addEventListener("submit", upload)
 
 
 
@@ -74,16 +74,14 @@ function setGif(e){
 
 async function upload(e) {
     e.preventDefault();
-    let gifSelect = document.querySelector("#selected").getAttribute("value");
+    let gifSelect = document.querySelector("#gif").getAttribute("value");
     console.log(gifSelect);
 
     let postData = {
         id: "", 
-        time: Date.now(), 
+        timestamp: Date.now(), 
         title: document.querySelector("#title-input").value, 
-        body: {text: document.querySelector("#entry-content").value, gif: gifSelect}, 
-        comments: [], 
-        emojis: {emoji1: 0, emoji2: 0, emoji3: 0}
+        body: {text: document.querySelector("#entry-content").value, gifs: gifSelect}
     }
     
 	const options = {
@@ -94,15 +92,15 @@ async function upload(e) {
 		}
 	};
     try{
-	    let response = await fetch("#", options);
-        let resdata = await response.json();
-        console.log(resdata);
+	    await fetch("http://localhost:3000/update/create", options);
+        // let resdata = await response.json();
+        // console.log(resdata);
 
     } catch(err) {
         console.log(err)
     }
 
-    location.href = "index.html";
+    location.href = "index.html"
 }
 
 function noGifOpt(){
