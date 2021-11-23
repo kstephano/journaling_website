@@ -1,3 +1,4 @@
+const uuid = require('uuid');
 
 let templatePost = {   
     id: "96584286-4b00-48da-bc1d-fa1eb82a5ced",
@@ -9,7 +10,12 @@ let templatePost = {
     emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
 }
 
-let postArray = [templatePost]
+let form = document.querySelector('#comment-form')
+form.addEventListener("submit", postComment)
+
+let postArray = [templatePost, templatePost, templatePost, templatePost, templatePost, templatePost, templatePost]
+
+let holdsPostID;
 
 class Post {
     constructor(data) {
@@ -82,6 +88,8 @@ class Post {
         let gallery = document.querySelector('#gallery')
         let greyBox = document.querySelector("#greyed-out")
         let commentBox = document.querySelector('#comment-section')
+        let innerCommentBox = document.querySelector('.inner-comment-box')
+        let commentScrollSection = document.querySelector('.comment-create')
 
         gallery.append(postCard)
         postCardList.forEach(element => {
@@ -94,12 +102,15 @@ class Post {
         postBottomList.forEach(element => {
             postBottom.append(element)
         })
-        commentsButton.addEventListener("click", () => {
+        commentsButton.addEventListener("click", (e) => {
             greyBox.style.zIndex = "99"
             commentBox.style.zIndex = "100"
-            commentBox.textContent = ""
-            
-
+            innerCommentBox.style.zIndex = "101"
+            commentScrollSection.style.zIndex = "101"
+            // console.log(e.target.id)
+            appendComments(e.target.id)
+            holdsPostID = e.target.id
+ 
         })
         emojisContainerList.forEach(element => {
             emojisContainer.append(element)
@@ -121,4 +132,79 @@ class Post {
 }
 
 
+
+function appendComments(id) {
+    let post = postArray.filter(post => post.id === id)[0]
+    // console.log(post.comments)
+    let comments = post.comments
+    // console.log(comments)
+    comments.forEach(comment => {
+        drawComment(comment)
+    })
+}
+
+function drawComment(comment) {
+    let commentCard = document.createElement("div")
+    commentCard.classList.add("comment-card")
+    let commentDate = document.createElement("p")
+    commentDate.classList.add("comment-date")
+    let commentBody = document.createElement("p")
+    commentBody.classList.add("comment-body")
+
+    commentCard.id = comment.id
+    commentDate.textContent = dateFormat(comment.time)
+    commentBody.textContent = comment.body
+    let commentCardList = [commentDate, commentBody]
+
+    let commentArea = document.querySelector('.inner-comment-box')
+    commentCardList.forEach(element => {
+        commentCard.append(element)
+    })
+
+    commentArea.append(commentCard)
+}
+
 Post.drawAll(postArray)
+
+// console.log(Date(1637585812352))
+
+function dateFormat(timestamp){
+    let date = new Date(timestamp)
+
+    return date.getHours()+":"+date.getMinutes()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
+}
+
+async function postComment(e){
+    e.preventDefault()
+    let input = e.target.commentInput.value
+    if (input){
+        // let commentID = uuid.v4()
+        let commentData = {
+            id: uuid.v4(),
+            body: input,
+            time: Date.now()
+        }
+
+        const options = {
+            method: "POST",
+            body: JSON.stringify(commentData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        // let res = await fetch(`/`, options)
+        // let data = await res.json()
+        drawComment(commentData)
+        e.target.commentInput.value = ""
+
+    }
+}
+let homepage = "http//:localhost:3000"
+
+async function getSpecificPost(id) {
+    let res = await fetch(`${homepage}/search/${id}`)
+    let data = await res.json()
+
+    
+}
