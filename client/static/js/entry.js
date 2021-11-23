@@ -81,7 +81,7 @@ async function upload(e) {
         id: "", 
         timestamp: Date.now(), 
         title: document.querySelector("#title-input").value, 
-        body: {text: document.querySelector("#entry-content").value, gifs: gifSelect}
+        body: {text: document.querySelector("#entry-content").value, gifUrl: gifSelect}
     }
     
 	const options = {
