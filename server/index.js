@@ -1,10 +1,13 @@
 const server = require('./app');
-const { readFromFile } = require('./helpers/readWrite');
-const port = process.env.PORT || 3000;
+const { readFromFile, writeToFile } = require('./helpers/readWrite');
 
+const port = process.env.PORT || 3000;
 readFromFile();
 
 // start the server
 server.listen(port, () => {
-   console.log(`Listening at http://localhost:${port}`);
- });
+  console.log(`Listening at http://localhost:${port}`);
+  // set the server to save to file every 10 seconds
+  setTimeout(writeToFile, 10000);
+});
+
