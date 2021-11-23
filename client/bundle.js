@@ -863,18 +863,6 @@ document.querySelector("#greyed-out").addEventListener("click", () => {
 
 })
 
-// async function test() {
-//     let response = await fetch(`https://api.giphy.com/v1/gifs/07h85fP8YleCWGRSjV?api_key=q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy`);
-//     let data = await response.json();
-//     let image = document.createElement("img");
-//     image.setAttribute("src", data.data.embed_url);
-//     document.querySelector("#gallery").appendChild(image);
-// }
-
-// test();
-
-
-
 
 },{"uuid":1}],17:[function(require,module,exports){
 const uuid = require('uuid');
@@ -1019,18 +1007,11 @@ class Post {
 
 }
 
-
-<<<<<<< HEAD
-// New appendComments function, will try to fetch new comments before loading them
-async function appendComments(id) {
-=======
-
 getPosts();
 
+// New appendComments function, will try to fetch new comments before loading them
+async function appendComments(id) {
 
-function appendComments(id) {
-
->>>>>>> dcd43bdd759443610417bdc159b2d0778ae99180
     let post = postArray.filter(post => post.id === id)[0]
     let comments = post.comments
     console.log(id)
