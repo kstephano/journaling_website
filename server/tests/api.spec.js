@@ -161,7 +161,6 @@ describe('API server', () => {
         const result = await (await request(api).get('/search/all')).text;
         const data = await JSON.parse(result);
 
-        console.log(data);
         expect(data.entries.length).toBe(12);
     });
 })
