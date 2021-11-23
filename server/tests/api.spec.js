@@ -9,7 +9,7 @@ const { readFromFile } = require('../helpers/readWrite');
 describe('API server', () => {
     let api;
     const testUid = 12345;
-    let testEntry = {
+    const testEntry = {
         id: "another test id",
         timestamp: "another test timestamp",
         title: "Test entry title",
@@ -23,6 +23,16 @@ describe('API server', () => {
             loveCount: 0,
             laughCount: 0
         }
+    }
+    const testComment = {
+        id: "unique-comment-id",
+        timestamp: "comment timestamp",
+        body: "comment content"
+    }
+    const testEmojis = {
+        likeCount: 1,
+        loveCount: 1,
+        laughCount: 1
     }
 
     beforeAll(() => {
@@ -107,7 +117,7 @@ describe('API server', () => {
         expect(data.entries).toEqual(pageOneEntries);
     });
 
-    it('responds to post /update/create with status 200', (done) => {
+    it('responds to post /update/create with status 201', (done) => {
         request(api)
             .post('/update/create')
             .send(testEntry)
@@ -115,6 +125,12 @@ describe('API server', () => {
             .expect(201)
             .expect(testEntry, done);
     });
+
+    // it('responds to post /update/comment/:id with status 201', (done) => {
+    //     request(api)
+    //         .post('/update/emojis/:id')
+    //         .send()
+    // })
 
     it('responds to delete /delete/:id with status 204', async () => {
         await request(api).delete('/delete/test id').expect(204);
