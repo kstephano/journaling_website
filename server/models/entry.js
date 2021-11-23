@@ -46,7 +46,7 @@ class Entry {
             },
             ...data 
         });
-        entriesData.push(newEntry);
+        entriesData.unshift(newEntry);
     }
 
     /**
@@ -69,17 +69,59 @@ class Entry {
         let entriesForPage = [];
 
         // check if starting index exceeds the length of the entriesData array, and throw and error if true
-        if (startIndex > entriesData.length) {
-            throw 'Given page number exceeds entries array length';
+        if (startIndex > entriesData.length || startIndex < 0) {
+            throw new Error('Given page number not in range');
         } else {
             // Iterate 12 times and push the corresponding entries onto the new array
-            for (let i = 0; i < 12; i++) {
-                entriesForPage[i] = entriesData[startIndex];
+            for (let i = 0; i < 12 && startIndex < entriesData.length; i++) {
+                entriesForPage.push(entriesData[startIndex]);
                 startIndex++;
             }
         }
         return entriesForPage;
     }
+
+    /**
+     * Adds a comment to an Entry
+     * 
+     * @param {The data of the comment} data
+     * @param {The unique ID of the parent entry} entryId 
+     */
+
+    static addCommment(entryId, data) {
+        let entry = this.findById(entryId)
+        if(entry)
+            entry.comments.unshift(data)
+        else
+            throw new Error(`ID ${entryId} not found, could not add comments`)
+    }
+
+    /**
+     * Adds a comment to an Entry
+     * 
+     * @param {The data of the emoji} data
+     * @param {The unique ID of the parent entry} entryId 
+     */
+
+     static addEmoji(entryId, data) {
+
+        let emoji = this.findById(entryId)
+        emoji = emoji.emojis
+        if(emoji) {
+            if(data.likeCount)
+                emoji.likeCount += data.likeCount
+            else if(data.loveCount)
+                emoji.loveCount += data.loveCount
+            else if(data.laughCount)
+                emoji.laughCount += data.laughCount
+            else
+                throw new Error(`Invalid emoji for entry ID: ${entryId}`)
+        }
+        else
+            throw new Error(`ID ${entryId} not found, could not add emojis`)
+
+    }
+
 
     /**
      * Deletes a comment given its ID as well as the ID of the parent entry.
@@ -93,7 +135,7 @@ class Entry {
         if (entry) {
             entry.comments = entry.comments.filter(comment => comment.id != commentId);
         } else {
-            throw 'Given entry ID is invalid';
+            throw new Error('Given entry ID is invalid');
         }
     }
 }
