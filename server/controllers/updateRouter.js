@@ -6,7 +6,7 @@ const updateRouter = express.Router()
 updateRouter.post('/create', function (req, res) {
   try{
     Entry.create(req.body)
-    res.sendStatus(200)
+    res.sendStatus(201)
   } catch(err) {
     res.status(404).send(err.message);
   }
