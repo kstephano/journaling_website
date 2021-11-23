@@ -988,15 +988,13 @@ class Post {
             postBottom.append(element)
         })
         commentsButton.addEventListener("click", (e) => {
-            holdsPostID = e.target.id
             greyBox.style.zIndex = "99"
             commentBox.style.zIndex = "100"
             innerCommentBox.style.zIndex = "101"
             commentScrollSection.style.zIndex = "101"
             // console.log(e.target.id)
-            
             appendComments(e.target.id)
-            
+            holdsPostID = e.target.id
  
         })
         emojisContainerList.forEach(element => {
@@ -1008,7 +1006,7 @@ class Post {
 
     }
 
-    static drawAll() {
+    static drawAll(postsArray) {
         let arr = Post.all
         arr.forEach(post => {
             post.draw
@@ -1020,43 +1018,20 @@ class Post {
 }
 
 
+
 getPosts();
 
-// New appendComments function, will try to fetch new comments before loading them
-async function appendComments(id) {
-    let post = postArray.filter(post => post.id === id)[0]
-    let comments = post.comments
-    console.log(id)
-    try {
-        let res = await fetch(`http//:localhost:3000/search/${id}`)
-        console.log(res)
-        let data = await res.json()
-        console.log(data)
-        let newComments = data.entry.comments
-        console.log(id)
-        console.log(data)
-        const index = postArray.findIndex(element => element.id == holdsPostID)
-        postArray[index].comments = newComments
 
-    } catch(e) {
-        console.log(e)
-    }
-    
+function appendComments(id) {
+
+    let post = postArray.filter(post => post.id === id)[0]
+    // console.log(post.comments)
+    let comments = post.comments
+    // console.log(comments)
     comments.forEach(comment => {
         drawComment(comment)
     })
 }
-
-// old appendComments function, doesn't use fetch
-// function appendComments(id) {
-//     let post = postArray.filter(post => post.id === id)[0]
-//     // console.log(post.comments)
-//     let comments = post.comments
-//     // console.log(comments)
-//     comments.forEach(comment => {
-//         drawComment(comment)
-//     })
-// }
 
 function drawComment(comment) {
     let commentCard = document.createElement("div")
@@ -1076,7 +1051,7 @@ function drawComment(comment) {
         commentCard.append(element)
     })
 
-    commentArea.prepend(commentCard)
+    commentArea.append(commentCard)
 }
 
 
@@ -1099,8 +1074,6 @@ async function postComment(e){
             body: input,
             time: Date.now()
         }
-        const index = postArray.findIndex(element => element.id == holdsPostID)
-        postArray[index].comments.push(commentData)
 
         const options = {
             method: "POST",
@@ -1122,14 +1095,7 @@ let homepage = "http//:localhost:3000"
 async function getSpecificPost(id) {
     let res = await fetch(`${homepage}/search/${id}`)
     let data = await res.json()
-}
 
-let postEmojisData = [
-    {id: "kasbdasjdbashdbaj", emoji1: true, emoji2: false, emoji3: true}
-]
-
-
-function emojiClick() {
     
 }
 
