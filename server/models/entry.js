@@ -67,7 +67,7 @@ class Entry {
     static getEntriesByPageNumber(pageNum) {
         const pageSize = 12;
         let startIndex = (parseInt(pageNum) - 1) * pageSize;
-        let entriesForPage = entriesData.slice(startIndex, startIndex + pageSize)
+        let entriesForPage = entriesData.slice(startIndex, startIndex + pageSize);
         if (entriesForPage.length === 0) {
             throw new Error('Given page number not in range');
         }
