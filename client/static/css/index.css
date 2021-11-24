@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Praise&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Manuale:wght@300&display=swap');
 
->>>>>>> 9df33cfb72e9c346540bddfd02ff041914b99334
 @import url('./variables.css');
 
 * {
@@ -74,7 +71,9 @@ main {
     position: fixed;
     display: grid;
     grid-template-rows: 80% 20%;
-    background-color: yellow;
+    background-color: var(--colour-bg);
+    border-radius: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
     padding: 20px;
     z-index: -100;
     top: 5%;
@@ -86,7 +85,7 @@ main {
 
 .inner-comment-box{
     z-index: -99;
-    background-color: white;
+    background-color: var(--colour-bg);
     margin: auto;
     width: 100%;
     height: 100%;
@@ -96,27 +95,30 @@ main {
 .comment-card {
     margin: 5px;
     padding: 5px;
-    background-color: grey;
+    background-color: var(--colour-neutral-700);
+    border-radius: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
     width: auto;
     height: auto;
 }
 
 .comment-date {
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--colour-accent);
 }
 
 .comment-body {
     font-size: 20px;
     margin-top: 4px;
-    padding-left: 6px;
+    padding-left: 8px;
     padding-bottom: 2px;
+    color: var(--colour-accent)
 }
 
 
 .comment-create {
     z-index: -99;
-    background-color: black;
+    background-color: var(--colour-bg);
     margin: auto;
     width: 100%;
     height: 100%;
@@ -206,7 +208,7 @@ main {
 
 .post-body-gif {
     width: 100%;
-    border: 4px solid white;
+    border: 5px solid white;
     margin-bottom: 5px;
     box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
 }
