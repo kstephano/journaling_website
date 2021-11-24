@@ -8,6 +8,6 @@ readFromFile();
 server.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
   // set the server to save to file every 10 seconds
-  setTimeout(writeToFile, 10000);
+  setInterval(writeToFile, 10000);
 });
 
