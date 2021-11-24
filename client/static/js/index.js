@@ -11,6 +11,9 @@ let uniqueID = document.querySelector('#unique-id')
 let commentArea = document.querySelector('.inner-comment-box')
 
 uniqueID.textContent = `Your Unique ID is: ${localStorage.getItem("id")}`
+uniqueID.addEventListener("click", () => {
+    uniqueID.classList.toggle("text-hidden")
+})
 
 let commentButtons = document.querySelectorAll(".comments-button")
 
