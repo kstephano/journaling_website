@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Praise&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Manuale:wght@300&display=swap');
+
+>>>>>>> 9df33cfb72e9c346540bddfd02ff041914b99334
 @import url('./variables.css');
 
 * {
@@ -9,6 +15,44 @@
 
 body {
     background-color: var(--colour-bg);
+}
+
+header {
+    display: flex;
+    background-color: var(--colour-primary);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+    margin: 0 auto;
+    padding: .25rem;
+    background: linear-gradient(to right, white, white 50%, midnightblue 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: background-position 275ms ease;
+    cursor: pointer;
+}
+
+h1:hover {
+    background-position: 0 100%;
+}
+
+#new-entry-btn {
+    position: absolute;
+    top: 6px;
+    left: 4px;
+    height: 30px;
+    width: 30px;
+    padding: .25rem;
+    cursor: pointer;
+}
+
+#new-entry-btn:hover {
+    opacity: .5;
 }
 
 main {
