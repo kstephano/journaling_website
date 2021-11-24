@@ -108,12 +108,7 @@ class Entry {
     /**
      * Adds emojis in batch
      * 
-     * @param { The list of emojis [
-     *           {
-     *              id: str,
-     *              emojis: { likeCount: bool, loveCount: bool, laughCount: bool }
-     *           }
-     *        ]} emojis
+     * @param {The list of emojis [{ id: str, emojis: { likeCount: bool, loveCount: bool, laughCount: bool }}]} emojis
      */
 
     static addEmojis(emojis) {
