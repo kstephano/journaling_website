@@ -50,6 +50,17 @@ class Entry {
     }
 
     /**
+     * Loads data from the entries.json file into the array in the same order as on the file.
+     * Called when the entries.json file is first read, at the start up of the server.
+     * 
+     * @param {Data corresponding to that of an Entry object} id 
+     */
+    static load(data) {
+        const entry = new Entry({ ...data });
+        entriesData.push(entry);
+    }
+
+    /**
      * Deletes the entry that corresponds to the given ID.
      * 
      * @param {The unique ID of the entry to delete} id 
@@ -95,29 +106,21 @@ class Entry {
     }
 
     /**
-     * Adds a comment to an Entry
+     * Adds emojis in batch
      * 
-     * @param {The data of the emoji} data
-     * @param {The unique ID of the parent entry} entryId 
+     * @param {The list of emojis [{ id: str, emojis: { likeCount: bool, loveCount: bool, laughCount: bool }}]} emojis
      */
 
-     static addEmoji(entryId, data) {
-
-        let emoji = this.findById(entryId)
-        emoji = emoji.emojis
-        if(emoji) {
-            if(data.likeCount)
-                emoji.likeCount += data.likeCount
-            else if(data.loveCount)
-                emoji.loveCount += data.loveCount
-            else if(data.laughCount)
-                emoji.laughCount += data.laughCount
-            else
-                throw new Error(`Invalid emoji for entry ID: ${entryId}`)
+    static addEmojis(emojis) {
+        for(let emojiEntry of emojis) {
+            let entry = this.findById(emojiEntry.id)
+            if(entry) {
+                entry = entry.emojis
+                for(let key in emojiEntry.emojis)
+                    if(emojiEntry.emojis[key])
+                        entry[key]++
+            }
         }
-        else
-            throw new Error(`ID ${entryId} not found, could not add emojis`)
-
     }
 
 
