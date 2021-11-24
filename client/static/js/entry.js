@@ -60,7 +60,7 @@ function divBuilder(data, div){
 }
 
 function clearDiv(div){
-    div.innerHTML = "";
+    div.textContent = "";
 }
 
 function setGif(e){
