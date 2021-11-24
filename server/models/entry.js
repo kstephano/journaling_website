@@ -50,6 +50,17 @@ class Entry {
     }
 
     /**
+     * Loads data from the entries.json file into the array in the same order as on the file.
+     * Called when the entries.json file is first read, at the start up of the server.
+     * 
+     * @param {Data corresponding to that of an Entry object} id 
+     */
+    static load(data) {
+        const entry = new Entry({ ...data });
+        entriesData.push(entry);
+    }
+
+    /**
      * Deletes the entry that corresponds to the given ID.
      * 
      * @param {The unique ID of the entry to delete} id 
@@ -98,10 +109,10 @@ class Entry {
      * Adds emojis in batch
      * 
      * @param { The list of emojis [
-     *          {
+     *           {
      *              id: str,
      *              emojis: { likeCount: bool, loveCount: bool, laughCount: bool }
-     *          }
+     *           }
      *        ]} emojis
      */
 
