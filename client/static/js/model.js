@@ -8,9 +8,11 @@ let templatePost = {
     body: {text: "Body text", gif: "https://c.tenor.com/58egLELFYTsAAAAM/vibing.gif"},
     comments: [{id: "96584286-4b00-48da-bc1d-fa1eb82a5cee", time: 1637585812352, body: "comment 1"}, 
     {id: "96584286-4b00-48da-bc1d-fa1eb82a5cea", time: 1637585813352, body: "comment 2"}],
-    emojis: {emoji1: 0, emoji2: 5, emoji3: 11}
+    emojis: {likeCount: 0, loveCount: 5, laughCount: 11}
 }
 let pageNum = 1;
+
+
 
 // Listens for when 
 let form = document.querySelector('#comment-form')
@@ -23,7 +25,11 @@ let newestArray = [];
 
 let postArray = [];
 
+let emojiArray = [];
+
 let holdsPostID;
+
+window.addEventListener("beforeunload", unload)
 
 // Class used when handling Posts
 class Post {
@@ -35,9 +41,9 @@ class Post {
         this.body = data.body.text;
         this.gifUrl = data.body.gifUrl;
         this.comments = data.comments;
-        this.emoji1 = data.emojis.emoji1;
-        this.emoji2 = data.emojis.emoji2;
-        this.emoji3 = data.emojis.emoji3;
+        this.likeCount = data.emojis.likeCount;
+        this.loveCount = data.emojis.loveCount;
+        this.laughCount = data.emojis.laughCount;
     }
 
     // returns an array of Post objects using postArray
@@ -76,10 +82,13 @@ class Post {
         emojisContainer.classList.add("emojis-container")
         let emojiButton1 = document.createElement("div")
         emojiButton1.classList.add("emoji-button")
+        emojiButton1.setAttribute("value", "likeCount")
         let emojiButton2 = document.createElement("div")
         emojiButton2.classList.add("emoji-button")
+        emojiButton2.setAttribute("value", "loveCount")
         let emojiButton3 = document.createElement("div")
         emojiButton3.classList.add("emoji-button")
+        emojiButton3.setAttribute("value", "laughCount")
         let commentsButton = document.createElement("div")
         commentsButton.classList.add("comments-button")
         
@@ -89,11 +98,13 @@ class Post {
         let emojisContainerList = [emojiButton1, emojiButton2, emojiButton3]
 
         postHeading.textContent = this.title
-        postBodyGif.src = this.gifUrl
+        if (this.gifUrl) {
+            postBodyGif.src = this.gifUrl
+        }
         postBodyText.textContent = this.body
-        emojiButton1.textContent = this.emoji1
-        emojiButton2.textContent = this.emoji2
-        emojiButton3.textContent = this.emoji3
+        emojiButton1.textContent = this.likeCount
+        emojiButton2.textContent = this.loveCount
+        emojiButton3.textContent = this.laughCount
         commentsButton.textContent = "comments"
         commentsButton.id = this.id
 
@@ -111,6 +122,9 @@ class Post {
         postBodyList.forEach(element => {
             postBody.append(element)
         })
+        if (!this.gifUrl) {
+            postBodyGif.remove()
+        }
         postBottomList.forEach(element => {
             postBottom.append(element)
         })
@@ -125,7 +139,17 @@ class Post {
         emojisContainerList.forEach(element => {
             emojisContainer.append(element)
             element.addEventListener("click", () => {
-            element.classList.toggle("emoji-clicked")}
+            element.classList.toggle("emoji-clicked");
+            if (element.classList.contains("emoji-clicked")) {
+                const index = emojiArray.findIndex(element => element.id === commentsButton.id);
+                emojiArray[index].emojis[element.getAttribute("value")] = true;
+                element.textContent = Number(element.textContent)+1;
+            } else {
+                const index = emojiArray.findIndex(element => element.id === commentsButton.id);
+                emojiArray[index].emojis[element.getAttribute("value")] = false;
+                element.textContent = Number(element.textContent)-1;
+            }
+        }
         )})
     }
     // calls draw method on each Post in array returned from Post.all
@@ -142,12 +166,8 @@ getPosts();
 
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
-
-    let post = postArray.filter(post => post.id === id)[0]
-    let comments = post.comments
-    console.log(id)
     try {
-        let res = await fetch(`http://localhost:3000/search/${id}`)
+        let res = await fetch(`https://journaling-website.herokuapp.com/search/${id}`)
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -211,41 +231,53 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`http://localhost:3000/update/comments/${holdsPostID}`, options)
+        let res = await fetch(`https://journaling-website.herokuapp.com/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
 }
-let homepage = "http//:localhost:3000"
-
-async function getSpecificPost(id) {
-    let res = await fetch(`${homepage}/search/${id}`)
-    let data = await res.json()
-}
-
-let postEmojisData = [
-    {id: "kasbdasjdbashdbaj", emoji1: true, emoji2: false, emoji3: true}
-]
-
-
-function emojiClick() {
-    
-}
 
 async function getPosts(e) {
     try{
-        response = await fetch(`http://localhost:3000/search/page/${pageNum}`);
+        response = await fetch(`https://journaling-website.herokuapp.com/search/page/${pageNum}`);
         data = await response.json();
         console.log(data)
         data.entries.forEach(post => {
             if(!postArray.includes(post)){
                 newestArray.push(post);
                 postArray.push(post);
+                emojiArray.push({id: post.id, emojis: {loveCount: false, laughCount: false, likeCount: false}})
             };
         });
+        console.log(emojiArray);
         Post.drawAll();
         pageNum++
     } catch(err) {
+        console.log(err);
+        e.target.style.display = "none";
+        let noMore = document.createElement("p");
+        noMore.textContent = "No more posts to load!";
+        noMore.setAttribute("class", "no-more-msg")
+        document.querySelector("main").append(noMore);
+    }
+}
+
+async function unload(e) {    
+    let options = {
+        method: "POST",
+        body: JSON.stringify({emojis: emojiArray}),
+        headers: {
+			"Content-Type": "application/json"
+		}
+    }
+    
+    try{
+        await fetch("https://journaling-website.herokuapp.com/update/emojis", options)
+    } catch(err){
         console.log(err)
     }
+    
+
+    
+    e.returnValue = "";
 }

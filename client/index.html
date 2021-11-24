@@ -9,6 +9,10 @@
     <script defer src="bundle.js"></script>
 </head>
 <body>
+    <header>
+        <a id="a-postify" href="index.html"><h1>postify</h1></a>
+        <a id="a-new-post" href="addEntry.html"><img id="new-post-btn" src="./assets/images/plus_icon.png" alt="New entry button"></a>
+    </header>
     <!-- <div class="post-card">
         <div class="post-top">
             <h4 class="post-heading">Post heading</h4>
@@ -40,12 +44,12 @@
             <div class="comment-create">
                 <form id="comment-form">
                     <!-- <label for="commentInput"></label> -->
-                    <textarea name="commentInput" placeholder="Add comment" id="comment-input" cols="30" rows="10"></textarea>
+                    <textarea name="commentInput" form="comment-form" placeholder="Add comment" id="comment-input" cols="30" rows="10"></textarea>
                     <input type="submit" value="Post">
                 </form>
             </div>
         </div>
-        <div id="background-box"></div>
+        <!-- <div id="background-box"></div> -->
         <p id="unique-id">Your Unique ID is: </p>
         <section id="gallery">
             <!-- <div class="post-card">

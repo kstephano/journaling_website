@@ -8,11 +8,11 @@ const Entry = require('../models/entry');
  */
 function readFromFile() {
     try {
-        const jsonString = fs.readFileSync('./data/entries.json', 'utf-8');
+        const jsonString = fs.readFileSync('./data/entries.json', 'utf-8'); 
         const parsedData = JSON.parse(jsonString);
         // iterate through parsed json array and push each entry onto the entriesData array
         parsedData.forEach(parsedDataObject => {
-            Entry.create(parsedDataObject)
+            Entry.load(parsedDataObject)
         });
     } catch (err) {
         console.log(err);

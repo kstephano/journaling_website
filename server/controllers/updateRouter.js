@@ -22,16 +22,11 @@ updateRouter.post('/comments/:id', function(req, res) {
   }
 })
 
-// add emoji
-updateRouter.post('/emojis/:id', function(req, res) {
+// add emojis in batch
+updateRouter.post('/emojis', function(req, res) {
   try{
-    if(Entry.findById(req.params.id)) {
-      Entry.addEmoji(req.params.id, req.body)
+      Entry.addEmojis(req.body.emojis)
       res.sendStatus(201)
-    }
-    else
-      throw new Error(`${req.params.id} does not exist`)
-    
   } catch(err) {
     res.status(404).send(err.message);
   }

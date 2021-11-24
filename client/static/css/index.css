@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Praise&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Manuale:wght@300&display=swap');
+
+@import url('./variables.css');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,7 +11,54 @@
 }
 
 body {
-    background-color: ivory;
+    background-color: var(--colour-bg);
+}
+
+header {
+    display: flex;
+    background-color: var(--colour-primary);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
+}
+
+#a-postify {
+    margin: 0 auto;
+    text-decoration: none;
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+    padding: .25rem;
+    background: linear-gradient(to right, white, white 50%, midnightblue 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: background-position 275ms ease;
+    cursor: pointer;
+}
+
+h1:hover {
+    background-position: 0 100%;
+}
+#a-new-post {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    text-decoration: none;
+}
+
+
+#new-post-btn {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    padding: .25rem;
+    cursor: pointer;
+}
+
+#new-post-btn:hover {
+    opacity: .5;
 }
 
 main {
@@ -28,7 +80,9 @@ main {
     position: fixed;
     display: grid;
     grid-template-rows: 80% 20%;
-    background-color: yellow;
+    background-color: var(--colour-bg);
+    border-radius: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
     padding: 20px;
     z-index: -100;
     top: 5%;
@@ -40,7 +94,7 @@ main {
 
 .inner-comment-box{
     z-index: -99;
-    background-color: white;
+    background-color: var(--colour-bg);
     margin: auto;
     width: 100%;
     height: 100%;
@@ -50,24 +104,30 @@ main {
 .comment-card {
     margin: 5px;
     padding: 5px;
-    background-color: grey;
+    background-color: var(--colour-neutral-700);
+    border-radius: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
     width: auto;
     height: auto;
 }
 
 .comment-date {
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--colour-accent);
 }
 
 .comment-body {
     font-size: 20px;
+    margin-top: 4px;
+    padding-left: 8px;
+    padding-bottom: 2px;
+    color: var(--colour-accent)
 }
 
 
 .comment-create {
     z-index: -99;
-    background-color: black;
+    background-color: var(--colour-bg);
     margin: auto;
     width: 100%;
     height: 100%;
@@ -84,7 +144,7 @@ main {
     resize: none;
 }
 
-#background-box {
+/* #background-box {
     position: fixed;
     background-color: yellow;
     z-index: -99;
@@ -92,11 +152,12 @@ main {
     bottom: 5%;
     left: 10%;
     right: 10%;
-}
+    transition: right 300ms, left 300ms;
+} */
 
 
 #gallery {
-    background-color: rgba(255, 0, 0, 0.75);
+    background-color: var(--colour-bg);
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -113,35 +174,40 @@ main {
     grid-template-rows: 10% 1fr 6%;
     width: 400px;
     height: 550px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin: 15px 10px;
     transition: width 300ms;
 }
 
-.post-card:hover {
+/* .post-card:hover {
     box-shadow: 3px 3px rgba(0, 0, 0, 0.333);
     transition: all 5000ms;
-}
+} */
 
 .post-top {
-    background-color: blueviolet;
+    background-color: var(--colour-primary);
     display: flex;
     padding: 0 20px;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
+    border-radius: 5px;
+    margin-bottom: 3px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
 }
 
 .post-heading {
     align-self: center;
-    font-size: 25px;
+    font-size: 1.2em;
 }
 
 .post-body {
-    background-color: cornflowerblue;
+    background-color: var(--colour-secondary);
     padding: 5px 20px 10px;
     overflow: auto;
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    border-radius: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -151,8 +217,9 @@ main {
 
 .post-body-gif {
     width: 100%;
-    border: 1px solid black;
+    border: 5px solid white;
     margin-bottom: 5px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
 }
 
 .post-body-text {
@@ -162,11 +229,14 @@ main {
 }
 
 .post-bottom {
-    background-color: blueviolet;
+    background-color: var(--colour-secondary);
     padding: 0 20px;
-    border-top: 1px solid black;
+    /* border-top: 1px solid black; */
     display: grid;
     grid-template-columns: 65% 35%;
+    border-radius: 5px;
+    margin-top: 3px;
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.333);
 }
 
 .emojis-container {
@@ -176,27 +246,29 @@ main {
 }
 
 .emoji-button {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 30%;
     margin: auto;
     font-size: 18px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: var(--colour-accent);
+    border-radius: 5px;
 }
 
 .emoji-clicked {
     background-color: rgba(128, 255, 0, 0.9);
-    border: 1px solid;
+    /* border: 1px solid; */
 }
 
 .comments-button {
     justify-self: right;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 85%;
     text-align: center;
     margin: auto;
     font-size: 18px;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: var(--colour-accent);
+    border-radius: 5px;
 }
 
 .comments-button:hover, .emoji-button:hover {
@@ -216,6 +288,13 @@ main {
     background-color: rgba(255, 255, 255, 0.65);
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
+    cursor: pointer;
+}
+
+.text-hidden {
+    font-size: 0 !important;
+    height: 15px;
+    width: 15px;
 }
 
 @media screen and (max-width: 856px) {
@@ -261,9 +340,14 @@ main {
         font-size: 16px;
     }
 
-    #comment-section {
+    #comment-section, #background-box{
         left: 1%;
         right: 1%;
+    }
+    
+    
+    #comment-form {
+        grid-template-columns: 80% 20%;
     }
 }
 
@@ -275,6 +359,12 @@ main {
 
 #load-btn {
     display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-more-msg {
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
 }
