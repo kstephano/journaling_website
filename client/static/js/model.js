@@ -167,7 +167,7 @@ getPosts();
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
     try {
-        let res = await fetch(`http://localhost:3000/search/${id}`)
+        let res = await fetch(`https://stormy-bastion-86346.herokuapp.com/search/${id}`)
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -231,7 +231,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`http://localhost:3000/update/comments/${holdsPostID}`, options)
+        let res = await fetch(`https://stormy-bastion-86346.herokuapp.com/update/comments/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
@@ -239,7 +239,7 @@ async function postComment(e){
 
 async function getPosts(e) {
     try{
-        response = await fetch(`http://localhost:3000/search/page/${pageNum}`);
+        response = await fetch(`https://stormy-bastion-86346.herokuapp.com/search/page/${pageNum}`);
         data = await response.json();
         console.log(data)
         data.entries.forEach(post => {
@@ -253,7 +253,12 @@ async function getPosts(e) {
         Post.drawAll();
         pageNum++
     } catch(err) {
-        console.log(err)
+        console.log(err);
+        e.target.style.display = "none";
+        let noMore = document.createElement("p");
+        noMore.textContent = "No more posts to load!";
+        noMore.setAttribute("class", "no-more-msg")
+        document.querySelector("main").append(noMore);
     }
 }
 
@@ -267,7 +272,7 @@ async function unload(e) {
     }
     
     try{
-        await fetch("http://localhost:3000/update/emojis", options)
+        await fetch("https://stormy-bastion-86346.herokuapp.com/update/emojis", options)
     } catch(err){
         console.log(err)
     }
