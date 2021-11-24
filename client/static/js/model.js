@@ -98,7 +98,9 @@ class Post {
         let emojisContainerList = [emojiButton1, emojiButton2, emojiButton3]
 
         postHeading.textContent = this.title
-        postBodyGif.src = this.gifUrl
+        if (this.gifUrl) {
+            postBodyGif.src = this.gifUrl
+        }
         postBodyText.textContent = this.body
         emojiButton1.textContent = this.likeCount
         emojiButton2.textContent = this.loveCount
@@ -120,6 +122,9 @@ class Post {
         postBodyList.forEach(element => {
             postBody.append(element)
         })
+        if (!this.gifUrl) {
+            postBodyGif.remove()
+        }
         postBottomList.forEach(element => {
             postBottom.append(element)
         })
@@ -161,10 +166,6 @@ getPosts();
 
 // New appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
-
-    // let post = postArray.filter(post => post.id === id)[0]
-    // let comments = post.comments
-    // console.log(id)
     try {
         let res = await fetch(`http://localhost:3000/search/${id}`)
         let data = await res.json()
@@ -235,18 +236,6 @@ async function postComment(e){
         e.target.commentInput.value = ""
     }
 }
-let homepage = "http//:localhost:3000"
-
-async function getSpecificPost(id) {
-    let res = await fetch(`${homepage}/search/${id}`)
-    let data = await res.json()
-}
-
-let postEmojisData = [
-    {id: "kasbdasjdbashdbaj", likeCount: true, loveCount: false, laughCount: true}
-]
-
-
 
 async function getPosts(e) {
     try{
