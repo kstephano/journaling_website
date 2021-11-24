@@ -32,13 +32,13 @@ async function gifWindow(e) {
 };
 
 async function gifTrend(div) {
-    let response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=10`);
+    let response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=20`);
     let data = await response.json();
     divBuilder(data, div);
 }
 
 async function gifSearching(div, str){
-    let response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=10`);
+    let response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=20`);
     let data = await response.json();
     divBuilder(data, div);
 }
@@ -93,7 +93,7 @@ async function upload(e) {
 		}
 	};
     try{
-	    await fetch("http://localhost:3000/update/create", options);
+	    await fetch("https://stormy-bastion-86346.herokuapp.com//update/create", options);
         // let resdata = await response.json();
         // console.log(resdata);
 
