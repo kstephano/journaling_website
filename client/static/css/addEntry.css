@@ -113,7 +113,6 @@ footer p {
     background-color: black;
 }
 
-<<<<<<< HEAD
 .div-gif-wrap {
     outline-offset: -5px;
     box-sizing: border-box;
@@ -121,16 +120,24 @@ footer p {
     width: fit-content;
 }
 
+#a-postify {
+    margin: 0 auto;
+    text-decoration: none;
+}
+
 #go-back-btn {
-=======
-#a-go-back-btn {
->>>>>>> 372cb3c005cd08f3407e8325ecd846e359ee5e6a
     position: absolute;
     top: 6px;
     left: 4px;
     text-decoration: none;
 }
 
+#a-go-back-btn {
+    position: absolute;
+    top: 6px;
+    left: 4px;
+    text-decoration: none;
+}
 
 #go-back-btn {
     position: relative;
