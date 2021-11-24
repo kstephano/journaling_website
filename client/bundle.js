@@ -1134,7 +1134,11 @@ async function getPosts(e) {
         Post.drawAll();
         pageNum++
     } catch(err) {
-        console.log(err)
+        console.log(err);
+        e.target.style.display = "none";
+        let noMore = document.createElement("p");
+        noMore.textContent = "No more posts to load!";
+        
     }
 }
 
