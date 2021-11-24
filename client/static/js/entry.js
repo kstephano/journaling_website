@@ -1,4 +1,4 @@
-// let uuid = require('uuid');
+let uuid = require('uuid');
 let searchBtn = document.querySelector("#search-icon");
 let gifCont = document.querySelector(".gif-scrolling-displayer");
 
@@ -79,7 +79,7 @@ async function upload(e) {
     console.log(gifSelect);
 
     let postData = {
-        id: "", 
+        id: uuid.v4(), 
         timestamp: Date.now(), 
         title: document.querySelector("#title-input").value, 
         body: {text: document.querySelector("#entry-content").value, gifUrl: gifSelect}
