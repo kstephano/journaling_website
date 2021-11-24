@@ -20,9 +20,13 @@ header {
     box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
 }
 
+#a-postify {
+    margin: 0 auto;
+    text-decoration: none;
+}
+
 h1 {
     font-family: 'Lobster', cursive;
-    margin: 0 auto;
     padding: .25rem;
     background: linear-gradient(to right, white, white 50%, midnightblue 50%);
     background-clip: text;
@@ -37,18 +41,23 @@ h1 {
 h1:hover {
     background-position: 0 100%;
 }
-
-#new-entry-btn {
+#a-new-post {
     position: absolute;
-    top: 6px;
-    left: 4px;
+    top: 9px;
+    right: 15px;
+    text-decoration: none;
+}
+
+
+#new-post-btn {
+    position: relative;
     height: 30px;
     width: 30px;
     padding: .25rem;
     cursor: pointer;
 }
 
-#new-entry-btn:hover {
+#new-post-btn:hover {
     opacity: .5;
 }
 
@@ -361,6 +370,12 @@ main {
 
 #load-btn {
     display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-more-msg {
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
 }
