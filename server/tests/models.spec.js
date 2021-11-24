@@ -4,6 +4,21 @@ let entriesData = require('../data/entries');
 
 describe('Entry model', () => {
     const testUid = 12345;
+    const existingEntry = {
+        id: "798859a5-5aac-4afc-a857-0e6b53585747",
+        timestamp: 1637746336501,
+        title: "Hello ",
+        body: { 
+            text: "Test",
+            gifUrl: "https://media3.giphy.com/media/jpbnoe3UIa8TU8LM13/giphy.gif?cid=9cb59807lg2m2j8mvn4xdj7ef6kprsxmigs97wjlge3odk70&rid=giphy.gif&ct=g"
+        },
+        comments: [],
+        emojis: {
+            likeCount: 0,
+            loveCount: 0,
+            laughCount: 0
+        }
+    }
     const testEntry = {
         id: "another test id",
         timestamp: "another test timestamp",
@@ -13,10 +28,22 @@ describe('Entry model', () => {
             gifUrl: "Test gif url"
         }
     };
+    const testEmojiLike = [{
+        id: "test id",
+        emojis: { likeCount: true, loveCount: false, laughCount: false }
+    }];
+    const testEmojiLove = [{
+        id: "test id",
+        emojis: { likeCount: false, loveCount: true, laughCount: false }
+    }];
+    const testEmojiLaugh = [{
+        id: "test id",
+        emojis: { likeCount: false, loveCount: false, laughCount: true }
+    }];
 
     // Read from the entries.json file to populate the entries array with 1 test entry
     beforeAll(() => {
-        helpers.readFromFile(); // 2 entries
+        helpers.readFromFile(); // 3 entries
     });
 
     it('should make an instance of an entry', () => {
@@ -48,9 +75,8 @@ describe('Entry model', () => {
     });
 
     it('should return an entry', () => {
-        const entry = Entry.findById('test id');
-
-        expect(entry).toEqual(entriesData[1]);
+        const entry = Entry.findById("798859a5-5aac-4afc-a857-0e6b53585747");
+        expect(entry).toEqual(entriesData[0]);
     });
 
     it('should return undefined if given an invalid id', () => {
@@ -60,20 +86,19 @@ describe('Entry model', () => {
     });
 
     it('should create an entry', () => {
-        Entry.create(testEntry, testUid); // 3rd entry
+        Entry.create(testEntry, testUid); // 4th entry
         expect(entriesData[1]).toHaveProperty('id', 'timestamp', 'title', 'body', 'comments', 'emojis');
     });
 
     it('should delete an entry', () => {
-        Entry.deleteById("another test id"); // 2 entries
+        Entry.deleteById("another test id"); // 3 entries
         entriesData = Entry.all; // update entriesData
   
-        expect(entriesData.length).toEqual(2);
+        expect(entriesData.length).toEqual(3);
     });
 
     it('should be able to get a list of 12 entries given a valid page number', () => {
         // add entries so that there are 13 in the entriesData array
-        Entry.create(testEntry, testUid); // 3
         Entry.create(testEntry, testUid); // 4
         Entry.create(testEntry, testUid); // 5
         Entry.create(testEntry, testUid); // 6
@@ -84,6 +109,7 @@ describe('Entry model', () => {
         Entry.create(testEntry, testUid); // 11
         Entry.create(testEntry, testUid); // 12
         Entry.create(testEntry, testUid); // 13
+        Entry.create(testEntry, testUid); // 14
         const retrievedEntries = Entry.getEntriesByPageNumber(1);
 
         expect(retrievedEntries.totalEntries).toEqual(entriesData.length);
@@ -99,20 +125,25 @@ describe('Entry model', () => {
     });
 
     it('should be able to increment emojis.likeCount', () => {
-        Entry.findById('test id').emojis.likeCount++;
-
+        Entry.addEmojis(testEmojiLike);
         expect(Entry.findById('test id').emojis.likeCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.loveCount).toEqual(0);
+        expect(Entry.findById('test id').emojis.laughCount).toEqual(0);
     });
 
     it('should be able to increment emojis.loveCount', () => {
-        Entry.findById('test id').emojis.loveCount++;
+        Entry.addEmojis(testEmojiLove);
 
         expect(Entry.findById('test id').emojis.loveCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.likeCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.laughCount).toEqual(0);
     });
 
     it('should be able to increment emojis.laughCount', () => {
-        Entry.findById('test id').emojis.laughCount++;
+        Entry.addEmojis(testEmojiLaugh);
         expect(Entry.findById('test id').emojis.laughCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.likeCount).toEqual(1);
+        expect(Entry.findById('test id').emojis.loveCount).toEqual(1);
     });
 
     it('should be able to update the comments', () => {

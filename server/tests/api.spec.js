@@ -29,17 +29,16 @@ describe('API server', () => {
         timestamp: "comment timestamp",
         body: "comment content"
     }
-    const testEmojis = {
-        likeCount: 1,
-        loveCount: 1,
-        laughCount: 1
-    }
+
+    const testEmojis = [{ 
+        id: "test id",
+        emojis: { likeCount: true, loveCount: false, laughCount: false }
+    }];
 
     beforeAll(() => {
         // read the entries from the entries.json file
-        readFromFile(); // 2 entries
+        readFromFile(); // 3 entries
         // add new test entries
-        Entry.create(testEntry, testUid); // 3
         Entry.create(testEntry, testUid); // 4
         Entry.create(testEntry, testUid); // 5
         Entry.create(testEntry, testUid); // 6
@@ -50,6 +49,7 @@ describe('API server', () => {
         Entry.create(testEntry, testUid); // 11
         Entry.create(testEntry, testUid); // 12
         Entry.create(testEntry, testUid); // 13
+        Entry.create(testEntry, testUid); // 14
         // start the server and store it in the api variable
         api = server.listen(5000, () => {
             console.log('Test server running on port 5000');
@@ -128,7 +128,7 @@ describe('API server', () => {
     it('responds to post /update/comments/:id with status 201', (done) => {
         request(api)
             .post('/update/comments/test id')
-            .send({ id: "test comment id", timestamp: "test timestamp", body: "comment contents" })
+            .send(testComment)
             .set('Accept', 'application/json')
             .expect(201, done);
     });
@@ -136,15 +136,15 @@ describe('API server', () => {
     it('responds to update comments on an invalid entry id with status 404', (done) => {
         request(api)
             .post('/update/comments/invalid id')
-            .send({ id: "test comment id", timestamp: "test timestamp", body: "comment contents" })
+            .send(testComment)
             .set('Accept', 'application/json')
             .expect(404, done);
     });
 
-    it('responds to post /update/emojis/:id with status 201', (done) => {
+    it('responds to post /update/emojis with status 201', (done) => {
         request(api)
-            .post('/update/emojis/test id')
-            .send({ likeCount: 1, loveCount: 0, laughCount: 0 })
+            .post('/update/emojis')
+            .send(testEmojis)
             .set('Accept', 'application/json')
             .expect(201, done);
     });
@@ -158,10 +158,10 @@ describe('API server', () => {
     });
 
     it('responds to delete /delete/:id with status 204', async () => {
-        await request(api).delete('/delete/test id').expect(204); // 14th entry removed
-        const result = await (await request(api).get('/search/all')).text;
+        await request(api).delete('/delete/test id').expect(204); // 15th entry removed
+        const result = (await request(api).get('/search/all')).text;
         const data = await JSON.parse(result);
 
-        expect(data.entries.length).toBe(13);
+        expect(data.entries.length).toBe(14);
     });
 })
