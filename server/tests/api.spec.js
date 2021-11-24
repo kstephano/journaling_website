@@ -30,10 +30,9 @@ describe('API server', () => {
         body: "comment content"
     }
 
-    const testEmojis = [{ 
-        id: "test id",
-        emojis: { likeCount: true, loveCount: false, laughCount: false }
-    }];
+    const testEmojis = { 
+        emojis: [ {id: "test id", emojis: { likeCount: true, loveCount: false, laughCount: false }}]
+    };
 
     beforeAll(() => {
         // read the entries from the entries.json file
