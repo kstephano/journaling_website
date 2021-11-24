@@ -1002,15 +1002,14 @@ class Post {
             element.addEventListener("click", () => {
             element.classList.toggle("emoji-clicked");
             if (element.classList.contains("emoji-clicked")) {
-                console.log(commentsButton.id)
                 const index = emojiArray.findIndex(element => element.id === commentsButton.id);
                 emojiArray[index].emojis[element.getAttribute("value")] = true;
-                
+                element.textContent = Number(element.textContent)+1;
             } else {
                 const index = emojiArray.findIndex(element => element.id === commentsButton.id);
                 emojiArray[index].emojis[element.getAttribute("value")] = false;
+                element.textContent = Number(element.textContent)-1;
             }
-            console.log(emojiArray)
         }
         )})
     }
