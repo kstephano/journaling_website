@@ -1138,7 +1138,8 @@ async function getPosts(e) {
         e.target.style.display = "none";
         let noMore = document.createElement("p");
         noMore.textContent = "No more posts to load!";
-        
+        noMore.setAttribute("class", "no-more-msg")
+        document.querySelector("main").append(noMore);
     }
 }
 
