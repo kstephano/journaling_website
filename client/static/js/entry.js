@@ -93,7 +93,7 @@ async function upload(e) {
 		}
 	};
     try{
-	    await fetch("http://localhost:3000/update/create", options);
+	    await fetch("https://stormy-bastion-86346.herokuapp.com//update/create", options);
         // let resdata = await response.json();
         // console.log(resdata);
 
