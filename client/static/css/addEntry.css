@@ -86,6 +86,7 @@ footer p {
 }
 
 .gif-container {
+    width: 70%;
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -93,14 +94,26 @@ footer p {
 .gif-search-container {
     width: 300px;
     display: flex;
+    margin-bottom: 1rem;
 }
 
 .gif-scrolling-displayer {
-    height: 240px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: .5rem;
+    width: 100%;
+    height: 400px;
     overflow-y: scroll;
-    overflow-x: hidden;
-    white-space: wrap;
     background-color: black;
+}
+
+.div-gif-wrap {
+    outline-offset: -5px;
+    box-sizing: border-box;
+    height: fit-content;
+    width: fit-content;
 }
 
 #go-back-btn {
@@ -131,7 +144,7 @@ footer p {
     margin-top: 1rem;
     margin-left: 1rem;
     text-indent: 5px;
-    min-width: 300px;
+    width: 300px;
 }
 
 #entry-content {
@@ -139,11 +152,6 @@ footer p {
     padding: .2rem;
     width: 50%;
     text-indent: 5px;
-}
-
-#gif {
-    width: 300px;
-    padding-bottom: .5rem;
 }
 
 #search-input {
@@ -212,6 +220,7 @@ footer p {
     }
 
     .gif-container {
+        width: 100%;
         margin-right: auto;
         margin-left: auto;
         margin-bottom: 1rem;
