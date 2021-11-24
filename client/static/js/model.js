@@ -268,9 +268,7 @@ async function getPosts(e) {
     }
 }
 
-async function unload(e) {
-    // e.preventDefault();
-    
+async function unload(e) {    
     let options = {
         method: "POST",
         body: JSON.stringify({emojis: emojiArray}),
@@ -279,7 +277,12 @@ async function unload(e) {
 		}
     }
     
-    await fetch("http://localhost:3000/update/emojis", options)
+    try{
+        await fetch("http://localhost:3000/update/emojis", options)
+    } catch(err){
+        console.log(err)
+    }
+    
 
     
     e.returnValue = "";
