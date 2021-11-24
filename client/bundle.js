@@ -882,6 +882,8 @@ let templatePost = {
 }
 let pageNum = 1;
 
+
+
 // Listens for when 
 let form = document.querySelector('#comment-form')
 form.addEventListener("submit", postComment)
@@ -896,6 +898,8 @@ let postArray = [];
 let emojiArray = [];
 
 let holdsPostID;
+
+window.addEventListener("beforeunload", unload)
 
 // Class used when handling Posts
 class Post {
@@ -1113,9 +1117,6 @@ let postEmojisData = [
 ]
 
 
-function emojiClick() {
-    
-}
 
 async function getPosts(e) {
     try{
@@ -1135,6 +1136,23 @@ async function getPosts(e) {
     } catch(err) {
         console.log(err)
     }
+}
+
+async function unload(e) {
+    // e.preventDefault();
+    
+    let options = {
+        method: "POST",
+        body: JSON.stringify({emojis: emojiArray}),
+        headers: {
+			"Content-Type": "application/json"
+		}
+    }
+    
+    await fetch("http://localhost:3000/update/emojis", options)
+
+    
+    e.returnValue = "";
 }
 
 },{"uuid":1}]},{},[16,17]);
