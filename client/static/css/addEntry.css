@@ -27,9 +27,13 @@ header {
     box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
 }
 
+#a-postify {
+    margin: 0 auto;
+    text-decoration: none;
+}
+
 h1 {
     font-family: 'Lobster', cursive;
-    margin: 0 auto;
     padding: .25rem;
     background: linear-gradient(to right, white, white 50%, midnightblue 50%);
     background-clip: text;
@@ -41,6 +45,10 @@ h1 {
     cursor: pointer;
 }
 
+h1:hover {
+    background-position: 0 100%;
+}
+
 input {
     font-family: 'Lora', serif;
 }
@@ -48,10 +56,6 @@ input {
 textarea {
     font-family: 'Lora', serif;
     resize: none;
-}
-
-h1:hover {
-    background-position: 0 100%;
 }
 
 h2 {
@@ -109,6 +113,7 @@ footer p {
     background-color: black;
 }
 
+<<<<<<< HEAD
 .div-gif-wrap {
     outline-offset: -5px;
     box-sizing: border-box;
@@ -117,9 +122,18 @@ footer p {
 }
 
 #go-back-btn {
+=======
+#a-go-back-btn {
+>>>>>>> 372cb3c005cd08f3407e8325ecd846e359ee5e6a
     position: absolute;
     top: 6px;
     left: 4px;
+    text-decoration: none;
+}
+
+
+#go-back-btn {
+    position: relative;
     height: 30px;
     width: 30px;
     padding: .25rem;
