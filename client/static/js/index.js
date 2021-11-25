@@ -228,7 +228,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`${urlUsed}/${holdsPostID}`, options)
+        let res = await fetch(`${urlUsed}/update/comments/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
