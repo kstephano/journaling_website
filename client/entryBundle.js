@@ -842,17 +842,15 @@ const uuid = require('uuid');
 
 // fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
 const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
-const urlUsed = fetchUrls[0]
+const urlUsed = fetchUrls[1]
 
 const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
 let gifUrl = ""; // selected GIF url
 let isHighLighted = false; // checks if there is a currently highlighted GIF
 let lastSelectedGif = null; // value of the last highlighted GIF
-let entryLineBreaksCount = 0; // counts the number of line breaks entered by the user
 
 // initialise HTML elements as JS objects
 const form = document.querySelector("form");
-const entryContent = document.querySelector("#entry-content");
 const searchBtn = document.querySelector("#search-icon");
 const removeGifBtn = document.querySelector('#remove-gif-icon');
 const gifCont = document.querySelector(".gif-scrolling-displayer");
@@ -999,22 +997,12 @@ function removeSelectedGif() {
  * @param {onkeydown event} e 
  */
 function CheckEnter(e) {
-    const isEntryContentFocused = (document.activeElement === entryContent);
     // number 13 is the "Enter" key on the keyboard
     if (e.keyCode === 13) {
         // cancel the default action of submitting the form
         e.preventDefault();
-        // if the entry content text area is in focus
-        if (isEntryContentFocused) {
-            // if the number of line breaks already entered is less than the limit of 10
-            if (entryLineBreaksCount < 10) {
-                entryContent.value += '\n';
-                entryLineBreaksCount++;
-            }
-        } else {
-            // trigger the click event on the removeGifBtn
-            searchBtn.click();
-        }
+        // trigger the click event on the removeGifBtn
+        searchBtn.click();
     }
 }
 
