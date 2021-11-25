@@ -11,6 +11,7 @@ To launch the server navigate to [server folder](./server)
 
 ## Usage
 - From the server folder, run `npm start` to launch the server
+- From the client folder, open the index.html with what you want
 ### Add Entries page
 ![image](https://user-images.githubusercontent.com/92591642/143436695-1cb5cdea-22a3-4f8d-9d94-bb802ade4408.png)
 ### Homepage - scroll down for more posts, each post is scrollable if there is overflow
