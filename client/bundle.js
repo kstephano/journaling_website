@@ -1080,7 +1080,7 @@ async function getPosts(e) {
         response = await fetch(`${urlUsed}/search/page/${pageNum}`);
         data = await response.json();
         data.entries.forEach(post => {
-            if (!postArray.includes(post)) {
+            if (!postArray.map(entry => entry.id).includes(post.id)) {
                 newestArray.push(post);
                 postArray.push(post);
                 emojiArray.push({id: post.id, emojis: {loveCount: false, laughCount: false, likeCount: false}})
