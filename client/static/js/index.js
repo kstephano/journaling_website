@@ -156,7 +156,7 @@ getPosts();
 // new appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
     try {
-        let res = await fetch(`${urlUsed}/search/${id}`, { headers: { 'Access-Control-Allow-Origin': "*" }})
+        let res = await fetch(`${urlUsed}/search/${id}`)
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -225,8 +225,7 @@ async function postComment(e){
             method: "POST",
             body: JSON.stringify(commentData),
             headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': "*"
+                "Content-Type": "application/json"
             }
         }
         let res = await fetch(`${urlUsed}/update/comments/${holdsPostID}`, options)
@@ -238,7 +237,7 @@ async function postComment(e){
 // Gets posts from server 12 at a time using page number system. If there are no more pages left, runs catch block
 async function getPosts(e) {
     try{
-        response = await fetch(`${urlUsed}/search/page/${pageNum}`, { headers: { 'Access-Control-Allow-Origin': "*" }});
+        response = await fetch(`${urlUsed}/search/page/${pageNum}`);
         data = await response.json();
         data.entries.forEach(post => {
             if (!postArray.includes(post)) {
@@ -266,7 +265,7 @@ async function unload(e) {
     let options = {
         method: "POST",
         body: JSON.stringify({emojis: emojiArray}),
-        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': "*" }
+        headers: { "Content-Type": "application/json" }
     }
     try{
         await fetch(`${urlUsed}/update/emojis`, options)
