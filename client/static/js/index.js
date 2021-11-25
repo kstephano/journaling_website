@@ -156,7 +156,7 @@ getPosts();
 // new appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
     try {
-        let res = await fetch(`${urlUsed}/search/${id}`, { headers: { 'Access-Control-Allow-Origin': "https://practical-lamport-74a600.netlify.app/" }})
+        let res = await fetch(`${urlUsed}/search/${id}`, { headers: { 'Access-Control-Allow-Origin': "*" }})
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -226,7 +226,7 @@ async function postComment(e){
             body: JSON.stringify(commentData),
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': "https://practical-lamport-74a600.netlify.app/"
+                'Access-Control-Allow-Origin': "*"
             }
         }
         let res = await fetch(`${urlUsed}/update/comments/${holdsPostID}`, options)
@@ -238,7 +238,7 @@ async function postComment(e){
 // Gets posts from server 12 at a time using page number system. If there are no more pages left, runs catch block
 async function getPosts(e) {
     try{
-        response = await fetch(`${urlUsed}/search/page/${pageNum}`, { headers: { 'Access-Control-Allow-Origin': "https://practical-lamport-74a600.netlify.app/" }});
+        response = await fetch(`${urlUsed}/search/page/${pageNum}`, { headers: { 'Access-Control-Allow-Origin': "*" }});
         data = await response.json();
         data.entries.forEach(post => {
             if (!postArray.includes(post)) {
@@ -266,7 +266,7 @@ async function unload(e) {
     let options = {
         method: "POST",
         body: JSON.stringify({emojis: emojiArray}),
-        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': "https://practical-lamport-74a600.netlify.app/" }
+        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': "*" }
     }
     try{
         await fetch(`${urlUsed}/update/emojis`, options)
