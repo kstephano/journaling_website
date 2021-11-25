@@ -75,7 +75,7 @@ describe('Entry model', () => {
     });
 
     it('should return an entry', () => {
-        const entry = Entry.findById("798859a5-5aac-4afc-a857-0e6b53585747");
+        const entry = Entry.findById("781dec4e-8323-4c11-9ab5-5bb4a3b890af");
         expect(entry).toEqual(entriesData[0]);
     });
 

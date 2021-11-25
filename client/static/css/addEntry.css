@@ -62,6 +62,7 @@ h2 {
     width: fit-content;
     padding: 1rem;
     font-family: 'Manuale', serif;
+    font-size: 22px;
 }
 
 footer {
@@ -80,6 +81,12 @@ footer p {
 
 .form-heading-container {
     border-bottom: 3px solid var(--colour-bg);
+}
+
+.form-left {
+    display: flex;
+    width: 40%;
+    flex-direction: column;
 }
 
 .form-body-container {
@@ -162,16 +169,16 @@ footer p {
 
 #title-input {
     padding: .2rem;
-    margin-top: 1rem;
-    margin-left: 1rem;
     text-indent: 5px;
-    width: 300px;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 #entry-content {
     min-width: 250px;
     padding: .2rem;
-    width: 50%;
+    width: 100%;
+    height: 100%;
     text-indent: 5px;
 }
 
@@ -188,6 +195,16 @@ footer p {
 }
 
 #search-icon:hover {
+    opacity: .5;
+}
+
+#remove-gif-icon {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+#remove-gif-icon:hover {
     opacity: .5;
 }
 
@@ -220,24 +237,25 @@ footer p {
 }
 
 @media screen and (max-width: 620px) {
-    footer {
-        margin-top: 3rem;
-    }
-
     .form-body-container {
         flex-direction: column;
         align-items: center;
     }
 
-    #entry-content {
+    .form-left {
         width: 100%;
-        margin: 0 1rem 1rem 1rem;
+        margin-bottom: 1rem;
     }
 
-    #gif {
-        display: block;
+    #add-entry-form {
         width: 100%;
-        margin: 0 auto;
+        margin-top: .5rem;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    #entry-content {
+        width: 100%;
     }
 
     .gif-container {
