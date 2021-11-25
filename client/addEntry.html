@@ -10,8 +10,8 @@
 </head>
 <body>
     <header>
-        <img id="go-back-btn" src="./assets/images/go-back_icon.png" alt="Go back button">
-        <h1>postify</h1>
+        <a id="a-go-back-btn" href="index.html"><img id="go-back-btn" src="./assets/images/go-back_icon.png" alt="Go back button"></a>
+        <a id="a-postify" href="index.html"><h1>postify</h1></a>
     </header>
     <main>
         <form id="add-entry-form" action="submit">
@@ -22,18 +22,11 @@
             <div class="form-body-container">
                 <textarea name="entry-content" id="entry-content" cols="30" rows="10" placeholder="Your text here" maxlength="1000"></textarea>
                 <div class="gif-container">
-                    <img 
-                        id="gif"
-                        src="./assets/gifs/gif_placeholder.gif" 
-                        alt="Chosen GIF"
-                    >
                     <div class="gif-search-container">
                         <input type="text" id="search-input" placeholder="Search for a GIF">
                         <img id="search-icon" src="./assets/images/search_icon.png" alt="Search button">
                     </div>
-                </div>
-                <div class="gif-scrolling-displayer">
-                   
+                    <div class="gif-scrolling-displayer"></div>
                 </div>
             </div>
             <button type="submit" id="submit-btn">Upload Post!</button>

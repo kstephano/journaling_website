@@ -1,20 +1,16 @@
 const uuid = require('uuid');
 
-const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy";
+const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
+let isHighLighted = false;
 
 // initialise HTML elements as JS objects
 const searchBtn = document.querySelector("#search-icon");
 const gifCont = document.querySelector(".gif-scrolling-displayer");
 const form = document.querySelector("form");
-const newGif = document.querySelector("#gif");
-// create placeholder img element to hold chosen gifs
-const noGif = document.createElement("img");
-noGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
-noGif.setAttribute("alt", "No GIF selection");
-noGif.setAttribute("id", "no-gif");
-noGif.style.width = "200px";
+let lastSelectedGif = null;
+// create gif to hold data for the selected gif (not shown on page)
+const newGif = document.createElement("img");
 
-noGifOpt(); // init remove GIF button
 gifTrend(gifCont); // add trending GIFs to the container
 initListeners(); 
 
@@ -24,10 +20,6 @@ initListeners();
 function initListeners() {
     searchBtn.addEventListener("click", gifWindow);
     form.addEventListener("submit", upload);
-    noGif.addEventListener('click', e => {
-        newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
-        newGif.removeAttribute("value");
-    });
 }
 
 /**
@@ -52,7 +44,7 @@ async function gifWindow() {
  * @param {The div object to populate with GIFs} div 
  */
 async function gifTrend(div) {
-    const response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=10`);
+    const response = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${apiId}&rating=g&limit=24`);
     const data = await response.json();
     divBuilder(data, div);
 }
@@ -65,7 +57,7 @@ async function gifTrend(div) {
  * @param {The search query sent to Giphy to find relevant GIFs} str 
  */
 async function gifSearching(div, str){
-    const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=10`);
+    const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiId}&rating=g&q=${str}&limit=24`);
     const data = await response.json();
     divBuilder(data, div);
 }
@@ -81,13 +73,16 @@ function divBuilder(data, div){
 
     for(let i = 0; i < gifs.length; i++){
         const gif = gifs[i].images.fixed_width;
-        // creates each GIF and appends it as a child to the div
-        const img = document.createElement('img');
+        // creates each GIF inside a div and appends that to the main div
+        const img = document.createElement("img");
+        const gifDiv = document.createElement("div");
+        gifDiv.classList.add("div-gif-wrap");
         img.setAttribute("src", gif.url);
         img.setAttribute("alt", gifs[i].title);
         img.setAttribute("value", gifs[i].images.original.url);
         img.setAttribute("id", gifs[i].images.original.url)
-        div.appendChild(img);
+        gifDiv.appendChild(img);
+        div.appendChild(gifDiv);
         // set an onClick listener for each appended gif
         const listen = document.getElementById(gifs[i].images.original.url);
         listen.addEventListener("click", setGif);
@@ -104,17 +99,41 @@ function clearDiv(div){
 }
 
 /**
- * Sets the GIF as the same as the GIF clicked on by the user.
+ * Sets the GIF attributes of the new gif to upload, whilst highlighting the selected GIF
+ * and removing any existing highlight from a previously selected GIF.
  * 
  * @param {Click event on a selected GIF} e 
  */
 function setGif(e){
     const selectedGif = e.target;
     newGif.setAttribute("src", selectedGif.src);
-    newGif.setAttribute("value", selectedGif.id);
-    // newGif.setAttribute("alt", gif.alt);
-    // newGif.setAttribute("id", "selected")
-    // div.appendChild(newGif);
+    newGif.setAttribute("value", selectedGif.id)
+    // if there is a previously highlighted gif...
+    if (lastSelectedGif) {
+        // if the last gif is itself && currently highlighted, remove it
+        if (lastSelectedGif === selectedGif && isHighLighted) {
+            selectedGif.parentElement.style.outline = "none";
+            isHighLighted = false;
+            newGif.removeAttribute("value");
+            newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
+        // if the last gif is itself && not currently highlighted, select it    
+        } else if (lastSelectedGif === selectedGif && !isHighLighted) {
+            selectedGif.parentElement.style.outline = "5px solid red";
+            lastSelectedGif = selectedGif;
+            isHighLighted = true;
+        // remove the previously selected GIF's highlight and highlight the new one    
+        } else {
+            selectedGif.parentElement.style.outline = "5px solid red";
+            lastSelectedGif.parentElement.style.outline = "none";
+            lastSelectedGif = selectedGif;
+            isHighLighted = true;
+        }
+    // highlight the selected GIF    
+    } else {
+        selectedGif.parentElement.style.outline = "5px solid red";
+        lastSelectedGif = selectedGif;
+        isHighLighted = true;
+    }
 }
 
 /**
@@ -149,6 +168,5 @@ async function upload(e) {
     } catch(err) {
         console.log(err)
     }
-
     location.href = "index.html"; // change page back to home
 }
