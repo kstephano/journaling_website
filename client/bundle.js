@@ -840,6 +840,10 @@ exports.default = _default;
 },{"./validate.js":14}],16:[function(require,module,exports){
 const uuid = require('uuid');
 
+// fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
+const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
+const urlUsed = fetchUrls[0]
+
 // const variables used to select base html elements
 const gallery = document.querySelector('#gallery')
 const greyBox = document.querySelector("#greyed-out")
@@ -992,7 +996,7 @@ getPosts();
 // new appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
     try {
-        let res = await fetch(`https://journaling-website.herokuapp.com/search/${id}`)
+        let res = await fetch(`${urlUsed}/search/${id}`)
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -1064,7 +1068,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`https://journaling-website.herokuapp.com/${holdsPostID}`, options)
+        let res = await fetch(`${urlUsed}/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
@@ -1073,7 +1077,7 @@ async function postComment(e){
 // Gets posts from server 12 at a time using page number system. If there are no more pages left, runs catch block
 async function getPosts(e) {
     try{
-        response = await fetch(`https://journaling-website.herokuapp.com/search/page/${pageNum}`);
+        response = await fetch(`${urlUsed}/search/page/${pageNum}`);
         data = await response.json();
         data.entries.forEach(post => {
             if (!postArray.includes(post)) {
@@ -1102,7 +1106,7 @@ async function unload(e) {
         headers: { "Content-Type": "application/json" }
     }
     try{
-        await fetch("https://journaling-website.herokuapp.com/update/emojis", options)
+        await fetch(`${urlUsed}/update/emojis`, options)
     } catch(err){
         console.log(err)
     }

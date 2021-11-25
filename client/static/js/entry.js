@@ -1,5 +1,9 @@
 const uuid = require('uuid');
 
+// fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
+const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
+const urlUsed = fetchUrls[1]
+
 const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
 let gifUrl = ""; // selected GIF url
 let isHighLighted = false; // checks if there is a currently highlighted GIF
@@ -198,7 +202,7 @@ async function upload(e) {
 	};
     // Attempt a POST request to the server API
     try{
-	    await fetch("https://journaling-website.herokuapp.com/update/create", options);
+	    await fetch(`${urlUsed}/update/create`, options);
     } catch(err) {
         console.log(err)
     }
