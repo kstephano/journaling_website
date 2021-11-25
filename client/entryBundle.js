@@ -841,15 +841,15 @@ exports.default = _default;
 const uuid = require('uuid');
 
 const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
-let isHighLighted = false;
+let isHighLighted = false; // checks if there is a currently highlighted GIF
 
 // initialise HTML elements as JS objects
 const searchBtn = document.querySelector("#search-icon");
 const gifCont = document.querySelector(".gif-scrolling-displayer");
 const form = document.querySelector("form");
 let lastSelectedGif = null;
-// create gif to hold data for the selected gif (not shown on page)
-const newGif = document.createElement("img");
+// selected GIF url
+let gifUrl = "";
 
 gifTrend(gifCont); // add trending GIFs to the container
 initListeners(); 
@@ -919,7 +919,7 @@ function divBuilder(data, div){
         img.setAttribute("src", gif.url);
         img.setAttribute("alt", gifs[i].title);
         img.setAttribute("value", gifs[i].images.original.url);
-        img.setAttribute("id", gifs[i].images.original.url)
+        img.setAttribute("id", gifs[i].images.original.url);
         gifDiv.appendChild(img);
         div.appendChild(gifDiv);
         // set an onClick listener for each appended gif
@@ -945,16 +945,14 @@ function clearDiv(div){
  */
 function setGif(e){
     const selectedGif = e.target;
-    newGif.setAttribute("src", selectedGif.src);
-    newGif.setAttribute("value", selectedGif.id)
+    gifUrl = selectedGif.id;
     // if there is a previously highlighted gif...
     if (lastSelectedGif) {
         // if the last gif is itself && currently highlighted, remove it
         if (lastSelectedGif === selectedGif && isHighLighted) {
             selectedGif.parentElement.style.outline = "none";
             isHighLighted = false;
-            newGif.removeAttribute("value");
-            newGif.setAttribute("src", "./assets/gifs/gif_placeholder.gif");
+            gifUrl = "";
         // if the last gif is itself && not currently highlighted, select it    
         } else if (lastSelectedGif === selectedGif && !isHighLighted) {
             selectedGif.parentElement.style.outline = "5px solid red";
@@ -982,14 +980,12 @@ function setGif(e){
  */
 async function upload(e) {
     e.preventDefault();
-    const chosenGifUrl = newGif.getAttribute("value");
-    console.log(chosenGifUrl);
 
     const postData = {
         id: uuid.v4(), 
         timestamp: Date.now(), 
         title: document.querySelector("#title-input").value, 
-        body: { text: document.querySelector("#entry-content").value, gifUrl: chosenGifUrl }
+        body: { text: document.querySelector("#entry-content").value, gifUrl: gifUrl }
     }
     
 	const options = {
@@ -1001,7 +997,7 @@ async function upload(e) {
 	};
     // Attempt a POST request to the server API
     try{
-	    await fetch("https://journaling-website.herokuapp.com/update/create", options);
+	    await fetch("http://localhost:3000/update/create", options);
         // let resdata = await response.json();
         // console.log(resdata);
     } catch(err) {
