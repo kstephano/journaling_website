@@ -244,13 +244,15 @@ async function getPosts(e) {
         });
         Post.drawAll();
         pageNum++
+        if(pageNum > data.totalPages){
+            document.querySelector("#load-btn").style.display = "none";
+            const noMore = document.createElement("p");
+            noMore.textContent = "No more posts to load!";
+            noMore.setAttribute("class", "no-more-msg")
+            document.querySelector("#the-biggest-id-in-this-project").append(noMore);
+        }
     } catch(err) {
         console.log(err);
-        e.target.style.display = "none";
-        const noMore = document.createElement("p");
-        noMore.textContent = "No more posts to load!";
-        noMore.setAttribute("class", "no-more-msg")
-        document.querySelector("#the-biggest-id-in-this-project").append(noMore);
     }
 }
 
