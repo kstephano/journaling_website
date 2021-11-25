@@ -10,9 +10,6 @@ This website is deployed on [Netlify]() and has an Node Express server deployed 
 - Use command `npm install`. 
 - Then navigate back to the main folder and into the [client folder](./client). 
 - Use command `npm install` again.
-- Inside the [client folder](./client), navigate to the [javascript folder](./client/static/js) and open the files in an IDE. Note: there are two urls in use - one for local one for Heroku. At default it is linked to the Heroku url. 
-- To change the url, change line `const urlUsed = fetchUrls[1]` to `const urlUsed = fetchUrls[0]` to be able to locally launch the client. 
-- Then run `npm run bundle` to update the bundles.
 
 ## Usage
 - From the server folder, run `npm start` to launch the server
