@@ -868,7 +868,6 @@ function initListeners() {
  */
 async function gifWindow() {
     clearDiv(gifCont);
-    gifCont.appendChild(noGif);
     const value = document.querySelector("#search-input").value;
     console.log(value)
     if(value){
