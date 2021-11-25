@@ -12,6 +12,7 @@
 
 body {
     background-color: var(--colour-bg);
+    font-family: 'Lora', serif;
 }
 
 header {
@@ -152,6 +153,10 @@ main {
     color: var(--colour-accent);
 }
 
+#comment-post-btn {
+    background-color: #99c7a0;
+}
+
 /* #background-box {
     position: fixed;
     background-color: yellow;
@@ -213,6 +218,7 @@ h4.post-heading {
     font-size: 1.2em;
     word-wrap: break-word;
     word-break: break-all;
+    font-family: 'Manuale', serif;
 }
 
 .post-body {
