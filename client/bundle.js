@@ -1078,7 +1078,7 @@ async function postComment(e){
 // Gets posts from server 12 at a time using page number system. If there are no more pages left, runs catch block
 async function getPosts(e) {
     try{
-        response = await fetch(`${urlUsed}/search/page/${pageNum}`, `{ headers: { 'Access-Control-Allow-Origin': "*" }}`);
+        response = await fetch(`${urlUsed}/search/page/${pageNum}`, { headers: { 'Access-Control-Allow-Origin': "*" }});
         data = await response.json();
         data.entries.forEach(post => {
             if (!postArray.includes(post)) {
