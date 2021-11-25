@@ -12,3 +12,5 @@ To launch the server navigate to [server folder](./server)
 ## Usage
 - From the server folder, run `npm start` to launch the server
 ![image](https://user-images.githubusercontent.com/92591642/143436695-1cb5cdea-22a3-4f8d-9d94-bb802ade4408.png)
+![image](https://user-images.githubusercontent.com/92591642/143438790-93538737-f169-4772-a234-102c738a76fa.png)
+![image](https://user-images.githubusercontent.com/92591642/143440201-bad16205-2764-4bb2-bd4c-d22a64eec683.png)
