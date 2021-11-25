@@ -191,6 +191,16 @@ footer p {
     opacity: .5;
 }
 
+#remove-gif-icon {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+#remove-gif-icon:hover {
+    opacity: .5;
+}
+
 #submit-btn {
     display: block;
     margin: 20px auto 0 auto;
