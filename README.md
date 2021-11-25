@@ -5,8 +5,9 @@ Postify is a community driven journaling website which allows users to anonymous
 This website is deployed on [Netlify]() and has an Node Express server deployed on [Heroku](https://journaling-website.herokuapp.com/).
 
 ## Installation
-Fork and clone the repo into your desired directionory. Open a terminal in the cloned repo and navigate to the [server folder](./server). Use command `npm install`. Then navigate back to the main folder and into the [client folder](./client). Use command `npm install` again.
+Fork and clone the repo into your desired directory. Open a terminal in the cloned repo and navigate to the [server folder](./server). Use command `npm install`. Then navigate back to the main folder and into the [client folder](./client). Use command `npm install` again.
 Inside the [client folder](./client), navigate to the [javascript folder](./client/static/js) and open the files in an IDE. Change the line `const urlUsed = fetchUrls[1]` to `const urlUsed = fetchUrls[0]` to be able to locally launch the client. 
 To launch the server navigate to [server folder](./server) 
 
 ## Usage
+![image](https://user-images.githubusercontent.com/92591642/143436695-1cb5cdea-22a3-4f8d-9d94-bb802ade4408.png)
