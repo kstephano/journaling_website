@@ -840,16 +840,19 @@ exports.default = _default;
 },{"./validate.js":14}],16:[function(require,module,exports){
 const uuid = require('uuid');
 
+// fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
+const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
+const urlUsed = fetchUrls[0]
+
 const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
+let gifUrl = ""; // selected GIF url
 let isHighLighted = false; // checks if there is a currently highlighted GIF
+let lastSelectedGif = null; // value of the last highlighted GIF
 
 // initialise HTML elements as JS objects
 const searchBtn = document.querySelector("#search-icon");
 const gifCont = document.querySelector(".gif-scrolling-displayer");
 const form = document.querySelector("form");
-let lastSelectedGif = null;
-// selected GIF url
-let gifUrl = "";
 
 gifTrend(gifCont); // add trending GIFs to the container
 initListeners(); 
@@ -997,9 +1000,7 @@ async function upload(e) {
 	};
     // Attempt a POST request to the server API
     try{
-	    await fetch("http://localhost:3000/update/create", options);
-        // let resdata = await response.json();
-        // console.log(resdata);
+	    await fetch(`${urlUsed}/update/create`, options);
     } catch(err) {
         console.log(err)
     }
