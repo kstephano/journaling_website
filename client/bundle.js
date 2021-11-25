@@ -994,7 +994,7 @@ getPosts();
 // new appendComments function, will try to fetch new comments before loading them
 async function appendComments(id) {
     try {
-        let res = await fetch(`http://localhost:3000/search/${id}`)
+        let res = await fetch(`https://journaling-website.herokuapp.com/search/${id}`)
         let data = await res.json()
         let newComments = data.entry.comments
         const index = postArray.findIndex(element => element.id == holdsPostID)
@@ -1066,8 +1066,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`http://localhost:3000/update/comments/${holdsPostID}`, options)
-        // prepends comment to comment box so it appears at the top
+        let res = await fetch(`https://journaling-website.herokuapp.com/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
@@ -1076,7 +1075,7 @@ async function postComment(e){
 // Gets posts from server 12 at a time using page number system. If there are no more pages left, runs catch block
 async function getPosts(e) {
     try{
-        response = await fetch(`http://localhost:3000/search/page/${pageNum}`);
+        response = await fetch(`https://journaling-website.herokuapp.com/search/page/${pageNum}`);
         data = await response.json();
         data.entries.forEach(post => {
             if (!postArray.includes(post)) {
@@ -1105,7 +1104,7 @@ async function unload(e) {
         headers: { "Content-Type": "application/json" }
     }
     try{
-        await fetch("http://localhost:3000/update/emojis", options)
+        await fetch("https://journaling-website.herokuapp.com/update/emojis", options)
     } catch(err){
         console.log(err)
     }
