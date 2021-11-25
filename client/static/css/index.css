@@ -343,6 +343,20 @@ h4.post-heading {
     background-color: var(--colour-neutral-700);
 }
 
+footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--colour-neutral-700);
+    color: white;
+    height: fit-content;
+    width: 100%;
+}
+
+footer p {
+    padding: 10px 30px 10px 30px;
+}
+
 @media screen and (max-width: 856px) {
     div.post-card {
         grid-template-rows: 10% 1fr 10%;
@@ -376,6 +390,12 @@ h4.post-heading {
         font-size: 14px;
     }
 }
+
+/* @media screen and (max-width: 620px) {
+    footer {
+        margin-top: 3rem;
+    }
+} */
 
 @media screen and (max-width: 590px) {
     div.post-card {
