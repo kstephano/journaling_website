@@ -868,7 +868,6 @@ function initListeners() {
  */
 async function gifWindow() {
     clearDiv(gifCont);
-    gifCont.appendChild(noGif);
     const value = document.querySelector("#search-input").value;
     console.log(value)
     if(value){
@@ -946,7 +945,6 @@ function clearDiv(div){
  */
 function setGif(e){
     const selectedGif = e.target;
-    const newGif = document.querySelector("#gif");
     newGif.setAttribute("src", selectedGif.src);
     newGif.setAttribute("value", selectedGif.id)
     // if there is a previously highlighted gif...
