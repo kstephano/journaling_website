@@ -842,7 +842,7 @@ const uuid = require('uuid');
 
 // fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
 const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
-const urlUsed = fetchUrls[0]
+const urlUsed = fetchUrls[1]
 
 // const variables used to select base html elements
 const gallery = document.querySelector('#gallery')
@@ -1068,7 +1068,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`${urlUsed}/${holdsPostID}`, options)
+        let res = await fetch(`${urlUsed}/update/comments/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }
@@ -1088,13 +1088,15 @@ async function getPosts(e) {
         });
         Post.drawAll();
         pageNum++
+        if(pageNum > data.totalPages){
+            document.querySelector("#load-btn").style.display = "none";
+            const noMore = document.createElement("p");
+            noMore.textContent = "No more posts to load!";
+            noMore.setAttribute("class", "no-more-msg")
+            document.querySelector("#the-biggest-id-in-this-project").append(noMore);
+        }
     } catch(err) {
         console.log(err);
-        e.target.style.display = "none";
-        const noMore = document.createElement("p");
-        noMore.textContent = "No more posts to load!";
-        noMore.setAttribute("class", "no-more-msg")
-        document.querySelector("#the-biggest-id-in-this-project").append(noMore);
     }
 }
 

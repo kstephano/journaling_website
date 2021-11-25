@@ -2,7 +2,7 @@ const uuid = require('uuid');
 
 // fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
 const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
-const urlUsed = fetchUrls[0]
+const urlUsed = fetchUrls[1]
 
 // const variables used to select base html elements
 const gallery = document.querySelector('#gallery')
@@ -228,7 +228,7 @@ async function postComment(e){
                 "Content-Type": "application/json"
             }
         }
-        let res = await fetch(`${urlUsed}/${holdsPostID}`, options)
+        let res = await fetch(`${urlUsed}/update/comments/${holdsPostID}`, options)
         drawComment(commentData, false)
         e.target.commentInput.value = ""
     }

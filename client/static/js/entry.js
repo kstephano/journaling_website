@@ -2,7 +2,7 @@ const uuid = require('uuid');
 
 // fetch url used. Change index of urlUsed to change everywhere. 0 for local hosting, 1 for heroku
 const fetchUrls = ["http://localhost:3000", "https://journaling-website.herokuapp.com"]
-const urlUsed = fetchUrls[0]
+const urlUsed = fetchUrls[1]
 
 const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data from Giphy
 let gifUrl = ""; // selected GIF url
