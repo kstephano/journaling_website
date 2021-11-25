@@ -230,13 +230,16 @@ footer p {
 }
 
 @media screen and (max-width: 620px) {
-    footer {
-        margin-top: 3rem;
-    }
-
     .form-body-container {
         flex-direction: column;
         align-items: center;
+    }
+
+    #add-entry-form {
+        width: 100%;
+        margin-top: .5rem;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     #entry-content {
