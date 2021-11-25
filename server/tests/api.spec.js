@@ -82,7 +82,7 @@ describe('API server', () => {
                     "title": "test tile",
                     "body": {
                         "text": "test body",
-                        "gifUrl": "test gif url"
+                        "gifUrl": ""
                     },
                     "comments": [
                         {
