@@ -838,8 +838,6 @@ function version(uuid) {
 var _default = version;
 exports.default = _default;
 },{"./validate.js":14}],16:[function(require,module,exports){
-
-},{}],17:[function(require,module,exports){
 const uuid = require('uuid');
 
 // const variables used to select base html elements
@@ -1111,4 +1109,4 @@ async function unload(e) {
     e.returnValue = "";
 }
 
-},{"uuid":1}]},{},[16,17]);
+},{"uuid":1}]},{},[16]);

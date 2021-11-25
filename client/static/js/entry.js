@@ -4,12 +4,16 @@ const apiId = "q7OQqQiFkKI87Cb4JZTdmON0sNbDV2hy"; // ID to use to fetch data fro
 let gifUrl = ""; // selected GIF url
 let isHighLighted = false; // checks if there is a currently highlighted GIF
 let lastSelectedGif = null; // value of the last highlighted GIF
+let entryLineBreaksCount = 0; // counts the number of line breaks entered by the user
 
 // initialise HTML elements as JS objects
-const searchBtn = document.querySelector("#search-icon");
-const gifCont = document.querySelector(".gif-scrolling-displayer");
 const form = document.querySelector("form");
+const entryContent = document.querySelector("#entry-content");
+const searchBtn = document.querySelector("#search-icon");
+const removeGifBtn = document.querySelector('#remove-gif-icon');
+const gifCont = document.querySelector(".gif-scrolling-displayer");
 
+form.onkeydown = CheckEnter; // check if the "Enter" button is pressed during an onkeydown event
 gifTrend(gifCont); // add trending GIFs to the container
 initListeners(); 
 
@@ -17,8 +21,9 @@ initListeners();
  * Initialise listeners for the search button, submit button, and remove GIF button.
  */
 function initListeners() {
-    searchBtn.addEventListener("click", gifWindow);
     form.addEventListener("submit", upload);
+    searchBtn.addEventListener("click", gifWindow);
+    removeGifBtn.addEventListener("click", removeSelectedGif);
 }
 
 /**
@@ -109,9 +114,7 @@ function setGif(e){
     if (lastSelectedGif) {
         // if the last gif is itself && currently highlighted, remove it
         if (lastSelectedGif === selectedGif && isHighLighted) {
-            selectedGif.parentElement.style.outline = "none";
-            isHighLighted = false;
-            gifUrl = "";
+            removeSelectedGif();
         // if the last gif is itself && not currently highlighted, select it    
         } else if (lastSelectedGif === selectedGif && !isHighLighted) {
             selectedGif.parentElement.style.outline = "5px solid red";
@@ -129,6 +132,45 @@ function setGif(e){
         selectedGif.parentElement.style.outline = "5px solid red";
         lastSelectedGif = selectedGif;
         isHighLighted = true;
+    }
+}
+
+/**
+ * De-selects the currently highlighted GIF, and sets the gifUrl to an empty string.
+ */
+function removeSelectedGif() {
+    // check if there is a currently highlighted GIF
+    if (lastSelectedGif) {
+        lastSelectedGif.parentElement.style.outline = "none";
+        isHighLighted = false;
+        gifUrl = "";
+    }
+}
+
+/**
+ * Checks if a pressed key is the "Enter" button. Prevents form submission
+ * and triggers either a new line in the entry content text area OR
+ * the click event on the search button (searches for GIFs).
+ * 
+ * @param {onkeydown event} e 
+ */
+function CheckEnter(e) {
+    const isEntryContentFocused = (document.activeElement === entryContent);
+    // number 13 is the "Enter" key on the keyboard
+    if (e.keyCode === 13) {
+        // cancel the default action of submitting the form
+        e.preventDefault();
+        // if the entry content text area is in focus
+        if (isEntryContentFocused) {
+            // if the number of line breaks already entered is less than the limit of 10
+            if (entryLineBreaksCount < 10) {
+                entryContent.value += '\n';
+                entryLineBreaksCount++;
+            }
+        } else {
+            // trigger the click event on the removeGifBtn
+            searchBtn.click();
+        }
     }
 }
 
