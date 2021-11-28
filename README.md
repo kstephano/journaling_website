@@ -2,7 +2,9 @@
 Contributors: Guy Margalith, Rahib Rahman, Raj Sharma, Kelvin Stephano
 ## Description
 Postify is a community journaling website which allows users to anonymously post journal entries, or posts. These posts contain a title, text and an optional gif. The gifs selected in the entry page make use of the [gify API](https://developers.giphy.com/docs/api/) to return results related to the users search term. Users can view posts on the homepage and can scroll down to load more posts. Users can leave anonymous comments on posts using a comment button and can also react to the post with three different emojis - Like, Love, Funny. 
+
 This website is deployed on [Netlify](https://postifyjournal.netlify.app/index.html) and has an Node Express server deployed on [Heroku](https://journaling-website.herokuapp.com/).
+
 
 ## Installation
 - Clone the repo into your desired directory. 
