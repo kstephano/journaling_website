@@ -163,4 +163,8 @@ describe('API server', () => {
 
         expect(data.entries.length).toBe(14);
     });
+
+    it('responds to deleting an invalid post id with status 404', () => {
+        request(api).delete('/delete/invalid id').expect(404); 
+    })
 })
