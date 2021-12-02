@@ -1,0 +1,6 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/kstephano/journaling_website_server.git
+[submodule "client"]
+	path = client
+	url = https://github.com/kstephano/journaling_website_client
