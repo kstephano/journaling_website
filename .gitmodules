@@ -1,0 +1,3 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/kstephano/journaling_website_server.git
